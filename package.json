@@ -15,5 +15,9 @@
   "bugs": {
     "url": "https://github.com/AvikRao/TJCSS/issues"
   },
-  "homepage": "https://github.com/AvikRao/TJCSS#readme"
+  "homepage": "https://github.com/AvikRao/TJCSS#readme",
+  "dependencies": {
+    "express": "^4.17.1",
+    "hbs": "^4.1.1"
+  }
 }
