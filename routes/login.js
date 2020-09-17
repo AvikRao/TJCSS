@@ -23,6 +23,29 @@ let authorizationUri = oauth2.authorizationCode.authorizeURL({ //create auth url
 });
 
 
+async function handleCode(req, res, next) { //ion sends code from auth url, figure out what to do with it
+    let theCode = req.query.code;
+
+    let options = {
+        'code': theCode,
+        'redirect_uri': ion_redirect_uri,
+        'scope': 'read'
+     };
+    
+    try {
+        let result = await oauth2.authorizationCode.getToken(options);    
+        let token = oauth2.accessToken.create(result);
+        res.locals.token = token;
+        next();
+    } 
+    catch (error) {
+        console.log('Access Token Error', error.message);
+         res.send(502); // bad stuff, man
+         //TODO create better error page
+    }
+}
+
+
 function verifyCookie(req, res, next) { //simple cookie check
     if (typeof req.session.token == 'undefined') {
         res.render('login', {
@@ -37,13 +60,14 @@ module.exports.set = function(app){
     app.set('trust proxy', 1)
     app.use(cookieSession({
         name: 'peppermint',   
-        keys: ['director Broke have a nice day', '1123xXx_pHasZe_qu1ckSc0p3r_xXx1123'] 
+        keys: ['director Broke have a nice day', '1123xXx_pHasZe_qu1ckSc0p3r_xXx1123']
     }))
 
     app.get('/login', (req, res) => {
         res.render('login', {url: authorizationUri});
     });
-    app.get('/oauth',[verifyCookie] ,(req,res) => {
-        res.redirect('/'); //redirect to home once verifyCookie is all good
+    app.get('/oauth',[handleCode] ,(req,res) => {
+        req.session.token = res.locals.token.token
+        res.redirect('/'); //redirect to home once handleCode is all good
     });
 }
