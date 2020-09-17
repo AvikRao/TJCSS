@@ -1,5 +1,8 @@
 let simpleoauth2 = require('simple-oauth2');
 let cookieSession = require('cookie-session');
+let axios = require('axios')
+const { default: Axios } = require('axios');
+const { response } = require('express');
 
 let ion_client_id = 'BjVuRUFYrXCdjYvtopJjJoBQozRVQxEMd6rijQsu'
 let ion_client_secret = 'OtFMc19R2hwJmCv3n7EfFTQDTpckHzuRP8sVG1EW4St40xHbIwXuKTT0LZxKK1lJ6Xhkr76EwyOlvkHRpBKDaO8gEzzvjTLhHjzIopL1V2s4oQfdl2TUw3hSVC9tt3AH'
@@ -70,4 +73,15 @@ module.exports.set = function(app){
         req.session.token = res.locals.token.token
         res.redirect('/'); //redirect to home once handleCode is all good
     });
+
+    app.get('/test', (req,res)=>{
+        let token = req.session.token.access_token;
+        let my_ion_request = 'https://ion.tjhsst.edu/api/profile?format=json&access_token=' + access_token;
+
+        axios.get(my_ion_request).then((resp)=>{
+            res.send(response);
+        })
+
+    })
+
 }
