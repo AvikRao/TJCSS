@@ -12,8 +12,15 @@ app.set('view engine', 'hbs');
 // routes.set(app);
 
 app.get('/', (req, res) => {
-	// res.send('yeet');
 	res.render('index');
+});
+
+app.get('/signup', (req, res) => {
+	res.render('signup');
+});
+
+app.get('/login', (req, res) => {
+	res.render('login');
 });
 
 let listener = app.listen(app.get('port'), function () {

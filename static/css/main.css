@@ -1,3 +1,28 @@
-.nav-item-right {
-    float: right
+html, body {
+    width:100%;
+    margin:0;
+    height:100%;
+}
+
+body {
+    background: url('/media/background.png') no-repeat center center fixed; 
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+}
+
+#navbar {
+    opacity:0.55;
+    background-color: #000000 !important;
+}
+
+.signup-box {
+    border-radius: 25px;
+    background-color: rgba(52, 58, 64, 0.4);
+    border: 1px solid #ffffff;
+}
+
+.box-hr {
+    border-color:#ffffff;
 }
