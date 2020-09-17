@@ -1,6 +1,9 @@
 let express = require('express');
 let app = express();
 let hbs = require('hbs');
+let path=require('path');
+let cookieSession = require('cookie-session')
+
 let routes = require('./routes')
 app.use(express.static('static'));
 hbs.registerPartials(__dirname + '/views/partials');

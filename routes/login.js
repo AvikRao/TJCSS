@@ -1,5 +1,49 @@
+let simpleoauth2 = require('simple-oauth2');
+let cookieSession = require('cookie-session');
+
+let ion_client_id = 'BjVuRUFYrXCdjYvtopJjJoBQozRVQxEMd6rijQsu'
+let ion_client_secret = 'OtFMc19R2hwJmCv3n7EfFTQDTpckHzuRP8sVG1EW4St40xHbIwXuKTT0LZxKK1lJ6Xhkr76EwyOlvkHRpBKDaO8gEzzvjTLhHjzIopL1V2s4oQfdl2TUw3hSVC9tt3AH'
+let ion_redirect_uri = 'https://tjcss.herokuapp.com/oauth'
+
+let oauth2 = simpleoauth2.create({ //create oauth client
+    client: {
+        id: ion_client_id,
+        secret: ion_client_secret,
+    },
+    auth: {
+        tokenHost: 'https://ion.tjhsst.edu/oauth/',
+        authorizePath: 'https://ion.tjhsst.edu/oauth/authorize',
+        tokenPath: 'https://ion.tjhsst.edu/oauth/token/'
+    }
+});
+
+let authorizationUri = oauth2.authorizationCode.authorizeURL({ //create auth url from oauth client
+    scope: "read",
+    redirect_uri: ion_redirect_uri
+});
+
+
+function verifyCookie(req, res, next) { //simple cookie check
+    if (typeof req.session.token == 'undefined') {
+        res.render('login', {
+            url: authorizationUri
+        });
+    } else next();
+
+}
+
 module.exports.set = function(app){
+
+    app.set('trust proxy', 1)
+    app.use(cookieSession({
+        name: 'peppermint',   
+        keys: ['director Broke have a nice day', '1123xXx_pHasZe_qu1ckSc0p3r_xXx1123'] 
+    }))
+
     app.get('/login', (req, res) => {
-        res.render('login');
+        res.render('login', {url: authorizationUri});
+    });
+    app.get('/oauth',[verifyCookie] ,(req,res) => {
+        res.redirect('/'); //redirect to home once verifyCookie is all good
     });
 }
