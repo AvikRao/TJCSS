@@ -76,7 +76,7 @@ module.exports.set = function(app){
 
     app.get('/test', (req,res)=>{
         let token = req.session.token.access_token;
-        let my_ion_request = 'https://ion.tjhsst.edu/api/profile?format=json&access_token=' + access_token;
+        let my_ion_request = 'https://ion.tjhsst.edu/api/profile?format=json&access_token=' + token;
 
         axios.get(my_ion_request).then((resp)=>{
             res.send(response);
