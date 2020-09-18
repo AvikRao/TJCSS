@@ -6,6 +6,7 @@
     </button>
 
     <div class="collapse navbar-collapse" id="navbarText">
+
         <ul class="navbar-nav mr-auto">
 
             <li class="nav-item active">
@@ -13,10 +14,35 @@
             </li>
             
         </ul>
-
-        <a href="/login"><button class="btn btn-outline-light my-2 my-sm-0 mr-2" type="submit">Log In</button></a>
-        <a href="/signup"><button class="btn btn-light my-2 my-sm-0 mr-2" type="submit">Sign Up</button></a>
+        {{#if user}}
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item dropdown" id="logout-dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        {{user.display_name}}
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
+                        <a class="dropdown-item" href="/logout">Log Out</a>
+                    </div>
+                </li>
+            </ul>
+        {{else}}
+            <a href="/login"><button class="btn btn-outline-light my-2 my-sm-0 mr-2" type="submit">Log In</button></a>
+        {{/if}}
         
+        {{!-- {{#if user}}
+            <a href="/login"><button class="btn btn-outline-light my-2 my-sm-0 mr-2" type="submit">Log In</button></a>
+        {{else}}
+        <ul class="navbar-nav ml-auto">
+            <li class="nav-item dropdown" id="logout-dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    {{user}}
+                </a>
+                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
+                    <a class="dropdown-item" href="/logout">Log Out</a>
+                </div>
+            </li>
+        </ul>
+        {{/if}} --}}
     </div>
     
 </nav>

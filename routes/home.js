@@ -1,5 +1,6 @@
-module.exports.set = function(app){
+module.exports.set = function (app) {
     app.get('/', (req, res) => {
-        res.render('index');
+        console.log(req.session);
+        res.render('index', { user: req.session ? (req.session.exists ? req.session : false) : false });
     });
 }

@@ -1,8 +1,8 @@
 let simpleoauth2 = require('simple-oauth2');
-let cookieSession = require('cookie-session');
+
 let axios = require('axios')
-const { default: Axios } = require('axios');
-const { response } = require('express');
+
+
 
 let ion_client_id = 'BjVuRUFYrXCdjYvtopJjJoBQozRVQxEMd6rijQsu'
 let ion_client_secret = 'OtFMc19R2hwJmCv3n7EfFTQDTpckHzuRP8sVG1EW4St40xHbIwXuKTT0LZxKK1lJ6Xhkr76EwyOlvkHRpBKDaO8gEzzvjTLhHjzIopL1V2s4oQfdl2TUw3hSVC9tt3AH'
@@ -60,29 +60,37 @@ function verifyCookie(req, res, next) { //simple cookie check
 
 module.exports.set = function(app){
 
-    app.set('trust proxy', 1)
-    app.use(cookieSession({
-        name: 'peppermint',   
-        keys: ['director Broke have a nice day', '1123xXx_pHasZe_qu1ckSc0p3r_xXx1123']
-    }))
-
     app.get('/login', (req, res) => {
-        res.render('login', {url: authorizationUri});
+        // res.render('login', {url: authorizationUri});
+        res.redirect(authorizationUri);
     });
+
     app.get('/oauth',[handleCode] ,(req,res) => {
         req.session.token = res.locals.token.token
-        res.redirect('/'); //redirect to home once handleCode is all good
+        
+        let my_ion_request = 'https://ion.tjhsst.edu/api/profile?format=json&access_token=' + req.session.token.access_token;
+
+        axios.get(my_ion_request).then((resp)=>{
+            req.session.display_name = resp.data.display_name;
+            req.session.exists = true;
+        }).catch(()=>{
+            //shit
+        }).then(()=>{
+            res.redirect('/'); //redirect to home once handleCode is all good
+        })
+
+       
     });
 
     app.get('/test', (req,res)=>{
-        let token = req.session.token.access_token;
-        let my_ion_request = 'https://ion.tjhsst.edu/api/profile?format=json&access_token=' + token;
-
-        axios.get(my_ion_request).then((resp)=>{
-            res.send('check logs');
-            console.log(resp)
-        })
+        res.json(req.session)
 
     })
+
+    app.get('/logout', (req, res) => {
+        req.session = null;
+        console.log(req.session);
+        res.redirect('/');
+    });
 
 }
