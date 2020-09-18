@@ -71,6 +71,12 @@ module.exports.set = function(app){
     });
     app.get('/oauth',[handleCode] ,(req,res) => {
         req.session.token = res.locals.token.token
+
+        let my_ion_request = 'https://ion.tjhsst.edu/api/profile?format=json&access_token=' + req.session.token.access_token;
+
+        axios.get(my_ion_request).then((resp)=>{
+            req.session.display_name = resp.data.display_name;
+        })
         res.redirect('/'); //redirect to home once handleCode is all good
     });
 
