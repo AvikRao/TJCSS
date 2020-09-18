@@ -71,6 +71,7 @@ module.exports.set = function(app){
     });
     app.get('/oauth',[handleCode] ,(req,res) => {
         req.session.token = res.locals.token.token
+        console.log(req.session.token)
         res.redirect('/'); //redirect to home once handleCode is all good
     });
 
