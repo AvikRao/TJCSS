@@ -80,7 +80,7 @@ module.exports.set = function(app){
 
         axios.get(my_ion_request).then((resp)=>{
             res.send('check logs');
-            console.log(resp)
+            console.log(resp.data)
         })
 
     })
