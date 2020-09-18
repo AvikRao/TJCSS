@@ -12,9 +12,9 @@
                 <h1 class='display-3'>Welcome to TJCSS</h1>
                 <p class="lead">A modern and practical solution to standardized CS submission testing and grading.</p>
                 {{#if user}}
-                    <a href="/login"><button class="btn btn-outline-light w-50 my-4 btn-lg" type="submit" id="ion-login-button">Log in with TJ ION <img src="/media/ion-icon.png" id="inline-ion-icon"></button></a>
-                {{else}}
                     <a href="/dashboard"><button class="btn btn-outline-light w-50 my-4 btn-lg" type="submit" id="ion-login-button">Go to Dashboard</button></a>
+                {{else}}
+                    <a href="/login"><button class="btn btn-outline-light w-50 my-4 btn-lg" type="submit" id="ion-login-button">Log in with TJ ION <img src="/media/ion-icon.png" id="inline-ion-icon"></button></a>
                 {{/if}}
             </div>
             
