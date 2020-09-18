@@ -79,7 +79,8 @@ module.exports.set = function(app){
         let my_ion_request = 'https://ion.tjhsst.edu/api/profile?format=json&access_token=' + token;
 
         axios.get(my_ion_request).then((resp)=>{
-            res.send(resp);
+            res.send('check logs');
+            console.log(resp)
         })
 
     })
