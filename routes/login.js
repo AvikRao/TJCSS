@@ -64,7 +64,7 @@ module.exports.set = function(app){
         // res.render('login', {url: authorizationUri});
         res.redirect(authorizationUri);
     });
-    
+
     app.get('/oauth',[handleCode] ,(req,res) => {
         req.session.token = res.locals.token.token
         
@@ -88,6 +88,7 @@ module.exports.set = function(app){
 
     app.get('/logout', (req, res) => {
         req.session = null;
+        console.log(req.session);
         res.redirect('/');
     });
 
