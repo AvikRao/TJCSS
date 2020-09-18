@@ -1,8 +1,8 @@
 let simpleoauth2 = require('simple-oauth2');
-let cookieSession = require('cookie-session');
+
 let axios = require('axios')
-const { default: Axios } = require('axios');
-const { response } = require('express');
+
+
 
 let ion_client_id = 'BjVuRUFYrXCdjYvtopJjJoBQozRVQxEMd6rijQsu'
 let ion_client_secret = 'OtFMc19R2hwJmCv3n7EfFTQDTpckHzuRP8sVG1EW4St40xHbIwXuKTT0LZxKK1lJ6Xhkr76EwyOlvkHRpBKDaO8gEzzvjTLhHjzIopL1V2s4oQfdl2TUw3hSVC9tt3AH'
@@ -59,12 +59,6 @@ function verifyCookie(req, res, next) { //simple cookie check
 }
 
 module.exports.set = function(app){
-
-    app.set('trust proxy', 1)
-    app.use(cookieSession({
-        name: 'peppermint',   
-        keys: ['director Broke have a nice day', '1123xXx_pHasZe_qu1ckSc0p3r_xXx1123']
-    }))
 
     app.get('/login', (req, res) => {
         res.render('login', {url: authorizationUri});
