@@ -61,8 +61,10 @@ function verifyCookie(req, res, next) { //simple cookie check
 module.exports.set = function(app){
 
     app.get('/login', (req, res) => {
-        res.render('login', {url: authorizationUri});
+        // res.render('login', {url: authorizationUri});
+        res.redirect(authorizationUri);
     });
+    
     app.get('/oauth',[handleCode] ,(req,res) => {
         req.session.token = res.locals.token.token
         
