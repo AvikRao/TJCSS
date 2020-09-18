@@ -70,9 +70,13 @@ module.exports.set = function(app){
 
         axios.get(my_ion_request).then((resp)=>{
             req.session.display_name = resp.data.display_name;
-        });
+        }).catch(()=>{
+            //shit
+        }).then(()=>{
+            res.redirect('/test'); //redirect to home once handleCode is all good
+        })
 
-        res.redirect('/'); //redirect to home once handleCode is all good
+       
     });
 
     app.get('/test', (req,res)=>{
