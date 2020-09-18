@@ -13,8 +13,7 @@ body {
 }
 
 #navbar {
-    opacity:0.55;
-    background-color: #000000 !important;
+    background-color: rgba(0, 0, 0, 0.55) !important;
 }
 
 .signup-box {
