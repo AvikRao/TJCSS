@@ -1,5 +1,5 @@
 module.exports.set = function (app) {
     app.get('/', (req, res) => {
-        res.render('index', { user: req.session ? req.session : '' });
+        res.render('index', { user: req.session ? req.session : false });
     });
 }
