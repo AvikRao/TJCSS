@@ -81,8 +81,11 @@ module.exports.set = function(app){
         axios.get(my_ion_request).then((resp)=>{
             res.send('check logs');
             console.log(resp.data);
+
+            req.session.display_name = resp.data.display_name;
             console.log('Is student: ' + resp.data.is_student.toString());
             console.log('Is teacher: ' + resp.data.is_teacher.toString());
+            console.log(req.session.display_name);
         })
 
     })
