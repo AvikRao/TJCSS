@@ -1,3 +1,5 @@
+let cookieSession = require('cookie-session')
+
 module.exports.set = function (app) {
     app.get('/', (req, res) => {
         app.set('trust proxy', 1)
