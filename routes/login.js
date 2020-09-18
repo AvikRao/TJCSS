@@ -73,7 +73,7 @@ module.exports.set = function(app){
         }).catch(()=>{
             //shit
         }).then(()=>{
-            res.redirect('/test'); //redirect to home once handleCode is all good
+            res.redirect('/'); //redirect to home once handleCode is all good
         })
 
        
@@ -83,5 +83,10 @@ module.exports.set = function(app){
         res.json(req.session)
 
     })
+
+    app.get('/logout', (req, res) => {
+        req.session = null;
+        res.redirect('/');
+    });
 
 }
