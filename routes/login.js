@@ -72,6 +72,7 @@ module.exports.set = function(app){
 
         axios.get(my_ion_request).then((resp)=>{
             req.session.display_name = resp.data.display_name;
+            req.session.exists = true;
         }).catch(()=>{
             //shit
         }).then(()=>{

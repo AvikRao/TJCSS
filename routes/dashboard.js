@@ -3,8 +3,8 @@ module.exports.set = function (app) {
 
         console.log(req.session);
 
-        if (req.session) {
-            res.render('dashboard', { user: req.session ? req.session : false });
+        if (req.session && req.session.exists) {
+            res.render('dashboard', { user: req.session});
         } else {
             res.redirect('/');
         }
