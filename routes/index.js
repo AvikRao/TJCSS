@@ -1,9 +1,9 @@
 let home = require('./home')
 let login = require('./login')
-let signup = require('./signup')
+let dashboard = require('./dashboard')
 
 module.exports.set = function(app){
     login.set(app);
     home.set(app);
-    signup.set(app);
+    dashboard.set(app);
 }
