@@ -86,6 +86,7 @@ module.exports.set = function(app){
             console.log('Is student: ' + resp.data.is_student.toString());
             console.log('Is teacher: ' + resp.data.is_teacher.toString());
             console.log(req.session.display_name);
+            console.log(req.session);
         })
 
     })
