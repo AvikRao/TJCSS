@@ -7,8 +7,52 @@
     </head>
     <body>
         {{> navbar}}
-        
 
+        <div class="dashboard-container">
+            <div class="row">
+
+                <div class="col-9 border-right">
+                    
+                    <h1 class="text-white mb-4">Classes</h1>
+                       
+                    <hr class="box-hr">
+                    <div class="row no-gutters">
+
+                    {{#each classes}}
+                        {{#each this}}
+                            <div class={{#if @first}}"col-3 my-2"{{else}}"col-3 offset-1 my-2"{{/if}}>
+                                <div class="card h-100">
+                                    <img class="card-img-top" src="/media/{{this.color}}.png" alt="Card image cap">
+                                    <div class="card-body rounded-bottom">
+                                        <h5 class="card-title">{{this.name}}</h5>
+                                        <hr class="box-hr">
+                                        <p>Instructor: {{this.teacher.name}}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        {{/each}}
+                    {{/each}}
+                    </div>
+
+                    {{!-- <div class="card" style="width: 18rem;">
+                        <div class="card-body">
+                            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                        </div>
+                    </div> --}}
+                </div>
+
+                <div class="col-3">
+                    <h1 class="text-white mb-4">Upcoming Labs</h1>
+                    <hr class="box-hr">
+                    <div class="card">
+                        <div class="card-body">
+                            <p class="card-text">This is an upcoming lab!</p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
         {{> scripts}}
     </body>
 </html>

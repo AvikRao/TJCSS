@@ -14,21 +14,17 @@ body {
 
 #navbar {
     background-color: rgba(0, 0, 0, 0.55) !important;
+    font-size: 1.2em;
+}
+
+.navbar-brand {
+    font-size: 1.3em;
 }
 
 .dropdown-menu {
 	margin: 8px 0px!important;
 }
 
-.signup-box {
-    border-radius: 25px;
-    background-color: rgba(52, 58, 64, 0.4);
-    border: 1px solid #ffffff;
-}
-
-.box-hr {
-    border-color:#ffffff;
-}
 
 #logout-dropdown .dropdown-menu{
     background-color: rgba(0, 0, 0, 0.55);
@@ -48,7 +44,50 @@ body {
     transition: filter 0.15s ease-in-out;
 }
 
+#inline-add-icon {
+    height: 1.25em;
+    transition: filter 0.15s ease-in-out;
+}
+
+.add-icon-span {
+    vertical-align: middle;
+}
+
 #ion-login-button:hover #inline-ion-icon {
     filter: invert(100%);
 }
 
+.dashboard-container {
+    margin-left: 10%;
+    margin-top: 2%;
+    margin-right: 10%
+}
+
+.box-hr {
+    border-color: #ffffff;
+    margin-top: 0;
+}
+
+.card-img-top {
+    height: 1vw;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    opacity: 1;
+}
+
+.card-body {
+    background-color: rgba(0, 0, 0, 0.5);
+    color: #ffffff;
+    border: transparent !important;
+}
+
+.card {
+    background-color: transparent;
+    border: transparent;
+    text-align: center;
+}
+
+.row-no-margin {
+    margin: 0;
+    padding: 0;
+} 
