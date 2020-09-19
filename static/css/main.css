@@ -45,12 +45,18 @@ body {
 }
 
 #inline-add-icon {
-    height: 1.25em;
+    height: 1.5em;
+    filter: invert(100%);
     transition: filter 0.15s ease-in-out;
+    padding-right: 0.5em;
 }
 
-.add-icon-span {
-    vertical-align: middle;
+#add-btn {
+    border-radius: 25px;
+}
+
+#add-btn:hover #inline-add-icon {
+    filter: invert(0%);
 }
 
 #ion-login-button:hover #inline-ion-icon {
@@ -91,3 +97,14 @@ body {
     margin: 0;
     padding: 0;
 } 
+
+.card-title-area {
+    height: 4rem;
+    align-content: center;
+    justify-content: center;
+}
+
+.card-title {
+    font-size:18px;
+    padding-top: 7px;
+}

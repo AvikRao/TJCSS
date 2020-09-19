@@ -69,6 +69,7 @@ function transform ( arr ) {
     arr.forEach( function ( elem, i ) {
 
         elem.color = colors[color_counter];
+        elem.index = i;
         if (color_counter < 3) color_counter += 1;
         else color_counter = 0;
 

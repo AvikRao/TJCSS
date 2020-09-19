@@ -13,7 +13,12 @@
 
                 <div class="col-9 border-right">
                     
-                    <h1 class="text-white mb-4">Classes</h1>
+                    <div class="row">
+                        <div class="col-12 d-flex">
+                            <h1 class="text-white mb-4">Classes</h1>
+                            <a href="/dashboard" class="ml-auto"><button class="btn btn-outline-light h-75" type="submit" id="add-btn"><img src="/media/plus.png" id="inline-add-icon">Add Class</button></a>
+                        </div>
+                    </div>
                        
                     <hr class="box-hr">
                     <div class="row no-gutters">
@@ -24,9 +29,12 @@
                                 <div class="card h-100">
                                     <img class="card-img-top" src="/media/{{this.color}}.png" alt="Card image cap">
                                     <div class="card-body rounded-bottom">
-                                        <h5 class="card-title">{{this.name}}</h5>
+                                        <div class='card-title-area'>
+                                            <h4 class="card-title">{{this.name}}</h4>
+                                        </div>
                                         <hr class="box-hr">
                                         <p>Instructor: {{this.teacher.name}}</p>
+                                        <a href="#"><button class="btn btn-outline-light w-75 h-25 mt-2" type="submit">Go to class</button></a>
                                     </div>
                                 </div>
                             </div>
