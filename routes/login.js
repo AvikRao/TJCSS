@@ -78,7 +78,7 @@ module.exports.set = function(app){
 
             let users = await db.query('SELECT * FROM users WHERE id=%s;', [req.session.userid]);
 
-            console.log(users);
+            console.log(users.test123test123);
 
             if (!users.rows) {
                 console.log("creating new user!");
@@ -86,7 +86,7 @@ module.exports.set = function(app){
                 users = await db.query('SELECT * FROM users;');
             }
 
-            console.log(users.rows);
+            // console.log(users.rows);
         }).catch(()=>{
             //shit
         }).then(()=>{
