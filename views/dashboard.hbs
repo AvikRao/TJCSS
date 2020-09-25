@@ -3,7 +3,8 @@
     <head>
         <title>TJCSS | Dashboard</title>
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
-        <link rel="stylesheet" href="css/main.css">
+        <link rel="stylesheet" href="/css/main.css">
+        <link rel="stylesheet" href="/css/hover-min.css">
     </head>
     <body>
         {{> navbar}}
@@ -34,7 +35,7 @@
                                         </div>
                                         <hr class="box-hr">
                                         <p>Instructor: {{this.teacher.name}}</p>
-                                        <a href="#"><button class="btn btn-outline-light w-75 h-25 mt-2" type="submit">Go to class</button></a>
+                                        <a href="/class/{{this.id}}"><button class="btn btn-outline-light w-75 h-25 mt-2" type="submit">Go to class</button></a>
                                     </div>
                                 </div>
                             </div>
