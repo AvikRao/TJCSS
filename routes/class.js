@@ -6,7 +6,7 @@ module.exports.set = function (app) {
         labs: [{
             id: '0001',
             classId: '0002',
-            deadline: '9-25-2020',
+            deadline: '9-27-2020',
             submission_max: 3,
             submissions: 0,
             grade: '----',
@@ -14,7 +14,7 @@ module.exports.set = function (app) {
         {
             id: '0002',
             classId: '0002',
-            deadline: '9-27-2020',
+            deadline: '9-29-2020',
             submission_max: 3,
             submissions: 1,
             grade: '95.17%',
@@ -46,7 +46,7 @@ module.exports.set = function (app) {
         {
             id: '0006',
             classId: '0002',
-            deadline: '9-28-2020',
+            deadline: '9-30-2020',
             submission_max: 3,
             submissions: 1,
             grade: '85.34%',
@@ -89,6 +89,8 @@ function transform ( arr ) {
     submitted.sort((a, b) => (Date.parse(a.deadline) > Date.parse(b.deadline)) ? 1 : -1);
 
     result = unsubmitted.concat(submitted).concat(completed);
+
+    console.log(result);
 
     return result;
 }
