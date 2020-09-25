@@ -1,15 +1,9 @@
+const db = require('./db');
+
 module.exports.set = function (app) {
-    app.get('/dashboard', (req, res) => {
-
-        /* REAL CODE REAL CODE REAL CODE REAL CODE REAL CODE REAL CODE REAL CODE REAL CODE REAL CODE REAL CODE REAL CODE REAL CODE REAL CODE */
-
-        // if (req.session && req.session.exists) {
-        //     res.render('dashboard', { user: req.session});
-        // } else {
-        //     res.redirect('/');
-        // }
-
-        /* REAL CODE REAL CODE REAL CODE REAL CODE REAL CODE REAL CODE REAL CODE REAL CODE REAL CODE REAL CODE REAL CODE REAL CODE REAL CODE */
+    app.get('/dashboard', async (req, res) => {
+        
+        
 
         let testdata = [
             {
@@ -54,9 +48,18 @@ module.exports.set = function (app) {
             },
         ];
 
-        console.log(transform(testdata));
-        res.render('dashboard', {classes: transform(testdata)});
+        if (req.session && req.session.exists) {
+            res.render('dashboard', { user: req.session, classes:transform(testdata)});
+        } else {
+            res.redirect('/');
+        }
 
+        
+        
+
+        // console.log(transform(testdata));
+        // res.render('dashboard', {classes: transform(testdata)});
+        
     });
 }
 
