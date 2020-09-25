@@ -78,7 +78,8 @@ module.exports.set = function(app){
 
             let users = await db.query('SELECT * FROM users WHERE id=%s;', [req.session.userid]);
 
-            if (!users) {
+            if (!users.rows) {
+                console.log("creating new user!");
                 await db.query('INSERT INTO users (id, isteacher, namestr) VALUES (%s, %s, %s);', [req.session.userid, req.session.is_teacher, req.session.display_name]);
                 users = await db.query('SELECT * FROM users;');
             }
