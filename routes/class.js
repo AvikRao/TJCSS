@@ -53,18 +53,18 @@ module.exports.set = function (app) {
         },]
     };
 
-    testdata.labs.forEach((obj) => {
-        let now = Date.now();
-        let deadline = Date.parse(obj.deadline);
-
-        if (deadline < now || obj.submissions == obj.submission_max) obj.status = "completed";
-        else if (obj.submissions == 0) obj.status = "unsubmitted";
-        else obj.status = "submitted";
-
-        obj.submissions_remaining = obj.submission_max - obj.submissions;
-    });
-
     app.get('/class/:classId', (req, res) => {
+
+        testdata.labs.forEach((obj) => {
+            let now = Date.now();
+            let deadline = Date.parse(obj.deadline);
+    
+            if (deadline < now || obj.submissions == obj.submission_max) obj.status = "completed";
+            else if (obj.submissions == 0) obj.status = "unsubmitted";
+            else obj.status = "submitted";
+    
+            obj.submissions_remaining = obj.submission_max - obj.submissions;
+        });
         
         testdata.labs = transform(testdata.labs);
         console.log(testdata.labs);
