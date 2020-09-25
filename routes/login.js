@@ -76,8 +76,14 @@ module.exports.set = function(app){
             req.session.is_teacher = resp.data.is_teacher;
             req.session.exists = true;
 
-            let users = await db.query('SELECT * FROM users;');
-            console.log(users);
+            let users = await db.query('SELECT * FROM users WHERE id=%s;', [req.session.userid]);
+
+            if (!users) {
+                await db.query('INSERT INTO users (id, isteacher, namestr) VALUES (%s, %s, %s);', [req.session.userid, req.session.is_teacher, req.session.display_name]);
+                users = await db.query('SELECT * FROM users;');
+            }
+
+            console.log(users.rows);
         }).catch(()=>{
             //shit
         }).then(()=>{
@@ -94,7 +100,6 @@ module.exports.set = function(app){
 
     app.get('/logout', (req, res) => {
         req.session = null;
-        console.log(req.session);
         res.redirect('/');
     });
 
