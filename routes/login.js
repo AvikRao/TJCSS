@@ -2,7 +2,7 @@ let simpleoauth2 = require('simple-oauth2');
 
 let axios = require('axios')
 
-
+let db = require('./db')
 
 let ion_client_id = 'BjVuRUFYrXCdjYvtopJjJoBQozRVQxEMd6rijQsu'
 let ion_client_secret = 'OtFMc19R2hwJmCv3n7EfFTQDTpckHzuRP8sVG1EW4St40xHbIwXuKTT0LZxKK1lJ6Xhkr76EwyOlvkHRpBKDaO8gEzzvjTLhHjzIopL1V2s4oQfdl2TUw3hSVC9tt3AH'
@@ -65,14 +65,19 @@ module.exports.set = function(app){
         res.redirect(authorizationUri);
     });
 
-    app.get('/oauth',[handleCode] ,(req,res) => {
+    app.get('/oauth',[handleCode] , async (req,res) => {
         req.session.token = res.locals.token.token
         
         let my_ion_request = 'https://ion.tjhsst.edu/api/profile?format=json&access_token=' + req.session.token.access_token;
 
-        axios.get(my_ion_request).then((resp)=>{
+        axios.get(my_ion_request).then( async (resp)=>{
             req.session.display_name = resp.data.display_name;
+            req.session.userid = resp.data.id;
+            req.session.is_teacher = resp.data.is_teacher;
             req.session.exists = true;
+
+            let users = await db.query('SELECT * FROM users;');
+            console.log(users);
         }).catch(()=>{
             //shit
         }).then(()=>{
