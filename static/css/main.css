@@ -108,3 +108,75 @@ body {
     font-size:18px;
     padding-top: 7px;
 }
+
+.dashboard-container .classname-span {
+    border-right: 2px solid #ffffff;
+    padding-right: 0.25em;
+}
+
+.dashboard-container .instructor-span {
+    margin-left: 0.25em;
+    font-size: 0.75em;
+    font-weight: normal;
+}
+
+.lab-list-item {
+    background-color: rgba(0, 0, 0, 0.5);
+    color: #ffffff;
+    margin-bottom: 1em;
+    height:4em;
+    transition: all .2s ease-in-out;
+}
+
+.lab-list-item:hover {
+    transform: scale(1.025);
+}
+
+.lab-status-submitted {
+    background-color: #FFFFFF;
+}
+
+.lab-status-unsubmitted {
+    background-color: #FFD800;
+}
+
+.lab-status-completed {
+    background-color: #007F46;
+}
+
+.lab-row-height {
+    height: 4em;
+    width: 4.16666666667%;
+    flex: 0 0 4.167%;
+    max-width: 4.16666666667;
+}
+
+.lab-row-title {
+    margin-left: 25px;
+    margin-top: 5px;
+}
+
+.lab-row-grade {
+    margin-top: 15px;
+}
+
+.lab-row-submissions{
+    margin-top: 20px;
+    text-align: center;
+}
+
+.lab-row-deadline {
+    
+    margin-top: 20px;
+    text-align: center;
+   
+}
+
+.lab-row-right-div {
+    margin-left: 0 !important;
+}
+
+a, a:link, a:hover, a:active {
+    text-decoration: none !important;
+}
+
