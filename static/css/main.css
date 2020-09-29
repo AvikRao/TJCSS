@@ -14,22 +14,172 @@ body {
 
 #navbar {
     background-color: rgba(0, 0, 0, 0.55) !important;
+    font-size: 1.2em;
+
+}
+
+.navbar-brand {
+    font-size: 1.3em;
 }
 
 .dropdown-menu {
 	margin: 8px 0px!important;
 }
 
-.signup-box {
+
+#logout-dropdown .dropdown-menu{
+    background-color: rgba(0, 0, 0, 0.55);
+}
+
+#logout-dropdown .dropdown-menu a{
+    color: #ffffff;
+}
+
+#main-box {
+    background-color:rgba(0, 0, 0, 0.4);
     border-radius: 25px;
-    background-color: rgba(52, 58, 64, 0.4);
-    border: 1px solid #ffffff;
+}
+
+#inline-ion-icon {
+    height: 1em;
+    transition: filter 0.15s ease-in-out;
+}
+
+#inline-add-icon {
+    height: 1.5em;
+    filter: invert(100%);
+    transition: filter 0.15s ease-in-out;
+    padding-right: 0.5em;
+}
+
+#add-btn {
+    border-radius: 25px;
+}
+
+#add-btn:hover #inline-add-icon {
+    filter: invert(0%);
+}
+
+#ion-login-button:hover #inline-ion-icon {
+    filter: invert(100%);
+}
+
+.dashboard-container {
+    margin-left: 10%;
+    margin-top: 2%;
+    margin-right: 10%
 }
 
 .box-hr {
-    border-color:#ffffff;
+    border-color: #ffffff;
+    margin-top: 0;
 }
 
+.card-img-top {
+    height: 1vw;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    opacity: 1;
+}
+
+.card-body {
+    background-color: rgba(0, 0, 0, 0.5);
+    color: #ffffff;
+    border: transparent !important;
+}
+
+.card {
+    background-color: transparent;
+    border: transparent;
+    text-align: center;
+}
+
+.row-no-margin {
+    margin: 0;
+    padding: 0;
+} 
+
+.card-title-area {
+    height: 4rem;
+    align-content: center;
+    justify-content: center;
+}
+
+.card-title {
+    font-size:18px;
+    padding-top: 7px;
+}
+
+.dashboard-container .classname-span {
+    border-right: 2px solid #ffffff;
+    padding-right: 0.25em;
+}
+
+.dashboard-container .instructor-span {
+    margin-left: 0.25em;
+    font-size: 0.75em;
+    font-weight: normal;
+}
+
+.lab-list-item {
+    background-color: rgba(0, 0, 0, 0.5);
+    color: #ffffff;
+    margin-bottom: 1em;
+    height:4em;
+    transition: all .2s ease-in-out;
+}
+
+.lab-list-item:hover {
+    transform: scale(1.025);
+}
+
+.lab-status-submitted {
+    background-color: #FFFFFF;
+}
+
+.lab-status-unsubmitted {
+    background-color: #FFD800;
+}
+
+.lab-status-completed {
+    background-color: #007F46;
+}
+
+.lab-row-height {
+    height: 4em;
+    width: 4.16666666667%;
+    flex: 0 0 4.167%;
+    max-width: 4.16666666667;
+}
+
+.lab-row-title {
+    margin-left: 25px;
+    margin-top: 5px;
+}
+
+.lab-row-grade {
+    margin-top: 15px;
+}
+
+.lab-row-submissions{
+    margin-top: 20px;
+    text-align: center;
+}
+
+.lab-row-deadline {
+    
+    margin-top: 20px;
+    text-align: center;
+   
+}
+
+.lab-row-right-div {
+    margin-left: 0 !important;
+}
+
+a, a:link, a:hover, a:active {
+    text-decoration: none !important;
+=======
 #logout-dropdown .dropdown-menu{
     background-color: rgba(0, 0, 0, 0.55);
 }
@@ -50,5 +200,6 @@ body {
 
 #ion-login-button:hover #inline-ion-icon {
     filter: invert(100%);
+
 }
 

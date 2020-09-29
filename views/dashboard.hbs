@@ -3,11 +3,66 @@
     <head>
         <title>TJCSS | Dashboard</title>
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
-        <link rel="stylesheet" href="css/main.css">
+
+        <link rel="stylesheet" href="/css/main.css">
+        <link rel="stylesheet" href="/css/hover-min.css">
     </head>
     <body>
         {{> navbar}}
-        
+
+        <div class="dashboard-container">
+            <div class="row">
+
+                <div class="col-9 border-right">
+                    
+                    <div class="row">
+                        <div class="col-12 d-flex">
+                            <h1 class="text-white mb-4">Classes</h1>
+                            <a href="/dashboard" class="ml-auto"><button class="btn btn-outline-light h-75" type="submit" id="add-btn"><img src="/media/plus.png" id="inline-add-icon">Add Class</button></a>
+                        </div>
+                    </div>
+                       
+                    <hr class="box-hr">
+                    <div class="row no-gutters">
+                    {{data}}
+                    {{#each classes}}
+                        {{#each this}}
+                            <div class={{#if @first}}"col-3 my-2"{{else}}"col-3 offset-1 my-2"{{/if}}>
+                                <div class="card h-100">
+                                    <img class="card-img-top" src="/media/{{this.color}}.png" alt="Card image cap">
+                                    <div class="card-body rounded-bottom">
+                                        <div class='card-title-area'>
+                                            <h4 class="card-title">{{this.name}}</h4>
+                                        </div>
+                                        <hr class="box-hr">
+                                        <p>Instructor: {{this.teacher.name}}</p>
+                                        <a href="/class/{{this.id}}"><button class="btn btn-outline-light w-75 h-25 mt-2" type="submit">Go to class</button></a>
+                                    </div>
+                                </div>
+                            </div>
+                        {{/each}}
+                    {{/each}}
+                    </div>
+
+                    {{!-- <div class="card" style="width: 18rem;">
+                        <div class="card-body">
+                            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                        </div>
+                    </div> --}}
+                </div>
+
+                <div class="col-3">
+                    <h1 class="text-white mb-4">Upcoming Labs</h1>
+                    <hr class="box-hr">
+                    <div class="card">
+                        <div class="card-body">
+                            <p class="card-text">This is an upcoming lab!</p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
 
         {{> scripts}}
     </body>

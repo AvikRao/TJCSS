@@ -9,6 +9,7 @@ app.use(express.static('static'));
 hbs.registerPartials(__dirname + '/views/partials');
 
 app.use(express.static('static'));
+
 app.set('port', process.env.PORT || 8080);
 
 app.set('view engine', 'hbs');

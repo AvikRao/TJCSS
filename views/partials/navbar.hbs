@@ -9,9 +9,15 @@
 
         <ul class="navbar-nav mr-auto">
 
-            <li class="nav-item active">
+            <li class="nav-item">
                 <a class="nav-link" href="/">Home</a>
             </li>
+
+            {{#if user}}
+                <li class="nav-item">
+                    <a href="/dashboard" class="nav-link">Dashboard</a>
+                </li>
+            {{/if}}
             
         </ul>
         {{#if user}}
