@@ -76,8 +76,6 @@ module.exports.set = function(app){
             req.session.is_teacher = resp.data.is_teacher;
             req.session.exists = true;
 
-            console.log(req.session);
-
             let users = await db.query('SELECT * FROM users WHERE id=%s;', req.session.userid);
 
             if (users.rows.length == 0) {
