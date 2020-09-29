@@ -17,8 +17,8 @@ const pool = new Pool( {
  * 
  */
 async function query(query, ...args){
-    const client = await pool.connect();
-    const result = client.query(format(query, args));
+    const client = await pool.connect();  
+    const result = client.query(format(query, ...args));
     client.release();
     return result;
 }
