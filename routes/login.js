@@ -78,14 +78,11 @@ module.exports.set = function(app){
 
             console.log(req.session);
 
-            let users = await db.query('SELECT * FROM users WHERE id=%s;', [req.session.userid]);
-
-            console.log(users.test123test123);
+            let users = await db.query('SELECT * FROM users WHERE id=%s;', req.session.userid);
 
             if (!users.rows) {
                 console.log("creating new user!");
-                await db.query('INSERT INTO users (id, isteacher, namestr) VALUES ($1, $2, $3);', [req.session.userid, req.session.is_teacher, req.session.display_name]);
-                users = await db.query('SELECT * FROM users;');
+                await db.query('INSERT INTO users (id, isteacher, namestr) VALUES (%s, %s, %s);', req.session.userid, req.session.is_teacher, req.session.display_name);
             }
 
             // console.log(users.rows);
