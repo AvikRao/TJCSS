@@ -88,7 +88,7 @@ module.exports.set = function(app){
 
             if (users.rows.length == 0) {
                 console.log("creating new user!");
-                await db.query('INSERT INTO users (id, isteacher, namestr) VALUES (%s, %s, %s);', req.session.userid, req.session.is_teacher, req.session.display_name);
+                await db.query('INSERT INTO users (id, isteacher, namestr) VALUES (%s, %L, %L);', req.session.userid, req.session.is_teacher, req.session.display_name);
             }
 
             // console.log(users.rows);
