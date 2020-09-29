@@ -2,7 +2,9 @@ let simpleoauth2 = require('simple-oauth2');
 
 let axios = require('axios')
 
+
 let db = require('./db')
+
 
 let ion_client_id = 'BjVuRUFYrXCdjYvtopJjJoBQozRVQxEMd6rijQsu'
 let ion_client_secret = 'OtFMc19R2hwJmCv3n7EfFTQDTpckHzuRP8sVG1EW4St40xHbIwXuKTT0LZxKK1lJ6Xhkr76EwyOlvkHRpBKDaO8gEzzvjTLhHjzIopL1V2s4oQfdl2TUw3hSVC9tt3AH'
@@ -65,7 +67,9 @@ module.exports.set = function(app){
         res.redirect(authorizationUri);
     });
 
+
     app.get('/oauth',[handleCode] , async (req,res) => {
+
         req.session.token = res.locals.token.token
         
         let my_ion_request = 'https://ion.tjhsst.edu/api/profile?format=json&access_token=' + req.session.token.access_token;
@@ -76,27 +80,26 @@ module.exports.set = function(app){
             req.session.is_teacher = resp.data.is_teacher;
             req.session.exists = true;
 
-            // console.log(req.session);
-
-            console.log('ABOUT TO PRINT USERID');
-            console.log(req.session.userid);
             let users = await db.query('SELECT * FROM users WHERE id=%s;', req.session.userid);
-            console.log('ABOUT TO PRINT USERS');
-            console.log(users);
-            console.log('ABOUT TO PRINT USERS.ROWS');
-            console.log(users.rows);
 
             if (users.rows.length == 0) {
                 console.log("creating new user!");
-                await db.query('INSERT INTO users (id, isteacher, namestr) VALUES (%s, %L, %L);', req.session.userid, req.session.is_teacher, req.session.display_name);
+                await db.query('INSERT INTO users (id, isTeacher, namestr) VALUES (%s, %L, %L);', req.session.userid, req.session.is_teacher, req.session.display_name);
             }
 
-            // console.log(users.rows);
         }).catch(()=>{
             //shit
         }).then(()=>{
             res.redirect('/'); //redirect to home once handleCode is all good
         })
+
+
+       
+    });
+
+    app.get('/test', (req,res)=>{
+        res.json(req.session)
+
 
        
     });
