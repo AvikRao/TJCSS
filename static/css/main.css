@@ -179,7 +179,8 @@ body {
 
 a, a:link, a:hover, a:active {
     text-decoration: none !important;
-=======
+}
+
 #logout-dropdown .dropdown-menu{
     background-color: rgba(0, 0, 0, 0.55);
 }
@@ -201,5 +202,23 @@ a, a:link, a:hover, a:active {
 #ion-login-button:hover #inline-ion-icon {
     filter: invert(100%);
 
+}
+
+label {
+    font-size: 1.5em !important;
+}
+
+#selectColor {
+    border: 0;
+    width: 15%;
+    height: 2rem;
+    margin-left: 0.5rem;
+    margin-top: 1em;
+    border-radius: 5px;;
+}
+
+#submitAddClass {
+    margin-top: 2rem;
+    font-size: 15pt;
 }
 

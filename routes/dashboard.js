@@ -4,8 +4,6 @@ const db = require('./db');
 module.exports.set = function (app) {
     app.get('/dashboard', async (req, res) => {
         
-        
-
         let testdata = [
             {
                 id: '0001',
@@ -54,12 +52,6 @@ module.exports.set = function (app) {
         } else {
             res.redirect('/');
         }
-
-        
-        
-
-        // console.log(transform(testdata));
-        // res.render('dashboard', {classes: transform(testdata)});
         
     });
 }
