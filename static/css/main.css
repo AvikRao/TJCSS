@@ -15,6 +15,7 @@ body {
 #navbar {
     background-color: rgba(0, 0, 0, 0.55) !important;
     font-size: 1.2em;
+
 }
 
 .navbar-brand {
@@ -178,5 +179,46 @@ body {
 
 a, a:link, a:hover, a:active {
     text-decoration: none !important;
+}
+
+#logout-dropdown .dropdown-menu{
+    background-color: rgba(0, 0, 0, 0.55);
+}
+
+#logout-dropdown .dropdown-menu a{
+    color: #ffffff;
+}
+
+#main-box {
+    background-color:rgba(0, 0, 0, 0.4);
+    border-radius: 25px;
+}
+
+#inline-ion-icon {
+    height: 1em;
+    transition: filter 0.15s ease-in-out;
+}
+
+#ion-login-button:hover #inline-ion-icon {
+    filter: invert(100%);
+
+}
+
+label {
+    font-size: 1.5em !important;
+}
+
+#selectColor {
+    border: 0;
+    width: 15%;
+    height: 2rem;
+    margin-left: 0.5rem;
+    margin-top: 1em;
+    border-radius: 5px;;
+}
+
+#submitAddClass {
+    margin-top: 2rem;
+    font-size: 15pt;
 }
 
