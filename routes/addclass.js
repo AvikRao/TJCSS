@@ -29,7 +29,7 @@ module.exports.set = function (app) {
             return res.redirect('/error');
         }
 
-        await db.query('INSERT INTO classes (name, teacher, color, period) VALUES (%L, %L, %L, %s);', className, req.session.display_name, color, period);
+        await db.query('INSERT INTO classes (name, teacher, color, period) VALUES (%L, %L, %L, %s);', className, req.session.display_name, color, period.replace(/\D/g, ""));
 
 
         console.log(req.body);
