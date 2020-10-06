@@ -222,3 +222,6 @@ label {
     font-size: 15pt;
 }
 
+.error-lead {
+    padding-bottom: 25px;
+}

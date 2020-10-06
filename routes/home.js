@@ -1,4 +1,3 @@
-
 let db = require('./db')
 
 //heroku pg:psql -a tjcss

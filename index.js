@@ -3,6 +3,11 @@ let app = express();
 let hbs = require('hbs');
 let path = require('path');
 let cookieSession = require('cookie-session')
+var bodyParser = require('body-parser');
+
+
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false })) 
 
 let routes = require('./routes')
 app.use(express.static('static'));
