@@ -29,10 +29,18 @@ module.exports.set = function (app) {
             return res.redirect('/error');
         }
 
-        await db.query('INSERT INTO classes (name, teacher, color, period) VALUES (%L, %L, %L, %s);', className, req.session.userid, color, period.replace(/\D/g, ""));
+        // THIS IS THE REAL LINE, DO NOT DELETE NO MATTER WHAT
+        // let classobj = await db.query('INSERT INTO classes (name, teacher, color, period) VALUES (%L, %L, %L, %s) RETURNING id;', className, req.session.userid, color, period.replace(/\D/g, ""));
+        // let classid = classobj.rows[0].id;
+        // await db.query('INSERT INTO class_user (uid, class) VALUES (%s, %s);', req.session.userid, classid);
+        // END REAL
 
+        // TEST LINES FOR FRONTEND DEV, REPLACE '2' WITH USER'S ID
+        let classobj = await db.query('INSERT INTO classes (name, teacher, color, period) VALUES (%L, %L, %L, %s) RETURNING id;', className, '2', color, period.replace(/\D/g, ""));
+        let classid = classobj.rows[0].id;
+        await db.query('INSERT INTO class_user (uid, class) VALUES (%s, %s);', '2', classid);
+        // END TEST
 
-        console.log(req.body);
         return res.redirect('dashboard');
         
     });
