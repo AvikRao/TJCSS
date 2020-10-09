@@ -52,6 +52,12 @@ body {
     padding-right: 0.5em;
 }
 
+#inline-gear-icon {
+    height: 1.5em;
+    filter: invert(100%);
+    cursor: pointer;
+}
+
 #add-btn {
     border-radius: 25px;
 }
@@ -220,5 +226,26 @@ label {
 #submitAddClass {
     margin-top: 2rem;
     font-size: 15pt;
+}
+
+.error-lead {
+    padding-bottom: 25px;
+}
+
+.modal-content {
+    background-color: rgba(0, 0, 0, 0.9) !important;
+    color: #ffffff;
+}
+
+.close, .close:hover {
+    color: #ffffff;
+}
+
+.modal-footer {
+    border: none;
+}
+
+#error-small {
+    color: red;
 }
 

@@ -4,7 +4,7 @@ let login = require('./login');
 let dashboard = require('./dashboard');
 let classview = require('./class');
 let addclass = require('./addclass');
-
+let error = require('./error');
 
 
 module.exports.set = function(app){
@@ -12,6 +12,7 @@ module.exports.set = function(app){
     home.set(app);
     dashboard.set(app);
     classview.set(app);
-    addclass.set(app)
+    addclass.set(app);
+    error.set(app);
 
 }
