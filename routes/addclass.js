@@ -7,7 +7,12 @@ const CLASSNAME_MAX_CHAR = 55;
 module.exports.set = function (app) {
 
     app.get('/addclass', async (req, res) => {
-        return res.render('addclass', { user: req.session });
+
+        if (req.session && req.session.exists) {
+            return res.render('addclass', { user: req.session });
+        } else {
+            return res.redirect('/');
+        }
 
     });
 

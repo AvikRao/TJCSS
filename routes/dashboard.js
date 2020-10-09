@@ -4,54 +4,54 @@ const db = require('./db');
 module.exports.set = function (app) {
     app.get('/dashboard', async (req, res) => {
 
-        let testdata = [
-            {
-                id: '0001',
-                teacher: {
-                    id: '0010',
-                    name: 'Smith, Joe'
-                },
-                name: "AI 2nd Period"
-            },
-            {
-                id: '0002',
-                teacher: {
-                    id: '0011',
-                    name: 'Rose, Stephen'
-                },
-                name: "Foundations CS"
-            },
-            {
-                id: '0003',
-                teacher: {
-                    id: '0012',
-                    name: 'Billington, Marion'
-                },
-                name: "Accelerated Foundations CS"
-            },
-            {
-                id: '0004',
-                teacher: {
-                    id: '0013',
-                    name: 'Kosek, Paul'
-                },
-                name: "Web Development Spring 2020"
-            },
-            {
-                id: '0005',
-                teacher: {
-                    id: '0014',
-                    name: 'Tra, Dan'
-                },
-                name: "Mobile Application Dev 3rd Period"
-            },
-        ];
+        // let testdata = [
+        //     {
+        //         id: '0001',
+        //         teacher: {
+        //             id: '0010',
+        //             name: 'Smith, Joe'
+        //         },
+        //         name: "AI 2nd Period"
+        //     },
+        //     {
+        //         id: '0002',
+        //         teacher: {
+        //             id: '0011',
+        //             name: 'Rose, Stephen'
+        //         },
+        //         name: "Foundations CS"
+        //     },
+        //     {
+        //         id: '0003',
+        //         teacher: {
+        //             id: '0012',
+        //             name: 'Billington, Marion'
+        //         },
+        //         name: "Accelerated Foundations CS"
+        //     },
+        //     {
+        //         id: '0004',
+        //         teacher: {
+        //             id: '0013',
+        //             name: 'Kosek, Paul'
+        //         },
+        //         name: "Web Development Spring 2020"
+        //     },
+        //     {
+        //         id: '0005',
+        //         teacher: {
+        //             id: '0014',
+        //             name: 'Tra, Dan'
+        //         },
+        //         name: "Mobile Application Dev 3rd Period"
+        //     },
+        // ];
 
         //REAL LINE, DO NOT DELETE
-        // let class_user  = await db.query('SELECT * FROM class_user WHERE uid=%s', req.session.userid);
+        let class_user  = await db.query('SELECT * FROM class_user WHERE uid=%s', req.session.userid);
 
         // TEST LINE FOR FRONTEND DEV
-        let class_user  = await db.query('SELECT * FROM class_user WHERE uid=%s', '2');
+        // let class_user  = await db.query('SELECT * FROM class_user WHERE uid=%s', '2');
         let class_user_rows = class_user.rows;
         let classids = [];
         class_user_rows.forEach((row) => {
@@ -77,20 +77,16 @@ module.exports.set = function (app) {
                 period: classperiod,
             });
         };
-
-        console.log(testdata);
-        console.log(realdata);
-
-
+        
         // REAL CODE REAL CODE REAL CODE REAL CODE REAL CODE REAL CODE REAL CODE REAL CODE REAL CODE REAL CODE REAL CODE REAL CODE REAL CODE REAL CODE REAL CODE 
-        // if (req.session && req.session.exists) {
-        //     res.render('dashboard', { user: req.session, classes:transform(testdata),});
-        // } else {
-        //     res.redirect('/');
-        // }
+        if (req.session && req.session.exists) {
+            res.render('dashboard', { user: req.session, classes:transform(realdata),});
+        } else {
+            res.redirect('/');
+        }
         // REAL CODE REAL CODE REAL CODE REAL CODE REAL CODE REAL CODE REAL CODE REAL CODE REAL CODE REAL CODE REAL CODE REAL CODE REAL CODE REAL CODE REAL CODE 
 
-        res.render('dashboard', { user: req.session, classes:transform(realdata),});
+        // res.render('dashboard', { user: req.session, classes:transform(realdata),});
 
     });
 

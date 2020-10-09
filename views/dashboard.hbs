@@ -18,7 +18,11 @@
                     <div class="row">
                         <div class="col-12 d-flex">
                             <h1 class="text-white mb-4">Classes</h1>
-                            <button data-toggle="modal" data-target="#addClassModal" class="btn btn-outline-light h-75 ml-auto" id="add-btn"><img src="/media/plus.png" id="inline-add-icon">Add Class</button>
+                            {{#if user.is_teacher}}
+                                <a href="/addclass"><button class="btn btn-outline-light h-75 ml-auto" id="add-btn"><img src="/media/plus.png" id="inline-add-icon">Add Class</button></a>
+                            {{else}}
+                                <button data-toggle="modal" data-target="#addClassModal" class="btn btn-outline-light h-75 ml-auto" id="add-btn"><img src="/media/plus.png" id="inline-add-icon">Add Class</button>
+                            {{/if}}
                         </div>
                     </div>
                        
