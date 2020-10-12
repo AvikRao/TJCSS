@@ -7,7 +7,12 @@ const CLASSNAME_MAX_CHAR = 55;
 module.exports.set = function (app) {
 
     app.get('/addclass', async (req, res) => {
-        return res.render('addclass', { user: req.session });
+
+        if (req.session && req.session.exists) {
+            return res.render('addclass', { user: req.session });
+        } else {
+            return res.redirect('/');
+        }
 
     });
 
@@ -36,9 +41,9 @@ module.exports.set = function (app) {
         // END REAL
 
         // TEST LINES FOR FRONTEND DEV, REPLACE '2' WITH USER'S ID
-        let classobj = await db.query('INSERT INTO classes (name, teacher, color, period) VALUES (%L, %L, %L, %s) RETURNING id;', className, '2', color, period.replace(/\D/g, ""));
+        let classobj = await db.query('INSERT INTO classes (name, teacher, color, period) VALUES (%L, %L, %L, %s) RETURNING id;', className, req.session.userid, color, period.replace(/\D/g, ""));
         let classid = classobj.rows[0].id;
-        await db.query('INSERT INTO class_user (uid, class) VALUES (%s, %s);', '2', classid);
+        await db.query('INSERT INTO class_user (uid, class) VALUES (%s, %s);', req.session.userid, classid);
         // END TEST
 
         return res.redirect('dashboard');

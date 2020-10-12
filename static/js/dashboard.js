@@ -9,6 +9,8 @@ function verifyAdd() {
             if (!($("#error-small").length)) {
                 $("#class-id-input").after('<small id="error-small" class="form-text">Invalid class code.</small>');
             }
+        } else {
+            location.reload();
         }
     });
 }
