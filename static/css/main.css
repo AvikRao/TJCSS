@@ -151,6 +151,14 @@ body {
     background-color: #007F46;
 }
 
+.lab-status-passed {
+    background-color: #007F46;
+}
+
+.lab-status-upcoming {
+    background-color: #FFFFFF;
+}
+
 .lab-row-height {
     height: 4em;
     width: 4.16666666667%;
@@ -249,3 +257,126 @@ label {
     color: red;
 }
 
+.description-container {
+    background-color: rgba(0, 0, 0, 0.5);
+    color: #ffffff;
+    border-radius: 10px;
+    margin-left: 10px;
+    /* padding: 5px; */
+}
+
+.description-container-inner {
+    padding: 10px;
+}
+
+.attached-files {
+    padding: 10px;
+}
+
+.attached-files-list-item {
+    background-color: rgba(255, 255, 255, 0.2);
+    padding: 10px;
+    margin-bottom: 10px;
+    font-size: 1.25em;
+    border-radius: 10px;
+    transition: all .2s ease-in-out;
+}
+
+.attached-files-list-item:hover {
+    transform: scale(0.975);
+}
+
+#inline-download-icon {
+    height: 1.5em;
+    filter: invert(100%);
+    padding-right: 0.5em;
+}
+
+.dropzone {
+    background: rgba(0, 0, 0, 0.8) !important;
+    color: #ffffff;
+    border: 2px dashed rgba(255, 255, 255, 0.75) !important;
+    border-image: none;
+    border-radius: 10px;
+    margin-bottom: 10px;
+}
+
+.submission-output {
+    background: rgba(0, 0, 0, 0.8);
+    border-radius: 10px;
+    color: #ffffff;
+    border: 2px solid rgba(255, 255, 255, 0.4);
+}   
+
+.lab-main-container {
+    height: 100%;
+}
+
+.output-header {
+    border-bottom: 2px solid rgba(255, 255, 255, 0.4);
+    padding-top: 15px;
+    padding-left: 15px;
+    padding-bottom: 10px;
+}
+
+.output-body {
+    padding-top: 15px;
+    padding-left: 15px;
+    padding-bottom: 10px;
+}
+
+.submission-list-item {
+    background-color: rgba(0, 0, 0, 0.5);
+    color: #ffffff;
+    margin-bottom: 1em;
+    height:5em;
+    transition: all .2s ease-in-out;
+}
+
+.submission-list-item:hover {
+    transform: scale(1.025);
+}
+
+.submission-status-completed {
+    background-color: #FFFFFF;
+}
+
+.submission-status-pending {
+    background-color: #FFD800;
+}
+
+.submission-status-failed {
+    background-color: #a40000;
+}
+
+.submission-row-height {
+    height: 5em;
+    width: 4.16666666667%;
+    flex: 0 0 4.167%;
+    max-width: 4.16666666667;
+}
+
+.submission-row-title {
+    margin-left: 25px;
+    margin-top: 10px;
+}
+
+.submission-row-grade {
+    margin-top: 25px;
+}
+
+.submission-row-submissions{
+    margin-top: 25px;
+    text-align: center;
+}
+
+.submission-row-deadline {
+    
+    margin-top: 20px;
+    text-align: center;
+   
+}
+
+.submission-row-right-div {
+    margin-left: 0 !important;
+}

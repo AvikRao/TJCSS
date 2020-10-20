@@ -5,6 +5,7 @@ let dashboard = require('./dashboard');
 let classview = require('./class');
 let addclass = require('./addclass');
 let error = require('./error');
+let lab = require('./lab');
 
 
 module.exports.set = function(app){
@@ -14,5 +15,5 @@ module.exports.set = function(app){
     classview.set(app);
     addclass.set(app);
     error.set(app);
-
+    lab.set(app);
 }

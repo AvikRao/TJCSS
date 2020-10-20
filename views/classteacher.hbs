@@ -11,19 +11,19 @@
         <div class="dashboard-container">
 
                     
-            <h1 class="text-white mb-4"><span class="classname-span">{{data.className}}</span><span class="instructor-span">Instructor: {{data.teacher}}</span></h1>
+            <h1 class="text-white mb-4">{{data.className}}</h1>
             <hr class="box-hr">
 
             {{#each data.labs}}
 
-                <a href="{{this.id}}">
-                <div class="row lab-list-item ">
+                <a href="/lab/{{this.id}}">
+                <div class="row no-gutters lab-list-item ">
 
                         <div class="col-1 lab-status-{{this.status}} lab-row-height hvr-grow"></div>
                         <div class="col-5"><h1 class='lab-row-text lab-row-title'>Lab {{this.id}}</h1></div>
                         <div class="col-2 ml-auto text-center"><p class="lab-row-text lab-row-deadline">Deadline: {{this.deadline}}</p></div>
-                        <div class="col-2 ml-auto border-left text-center lab-row-right-div"><p class="lab-row-text lab-row-submissions">Submission {{this.submissions}} of {{this.submission_max}}</p></div>
-                        <div class="col-1 ml-auto border-left text-center lab-row-right-div"><h4 class="lab-row-text lab-row-grade">{{this.grade}}</h4></div>
+                        {{!-- <div class="col-2 ml-auto border-left text-center lab-row-right-div"><p class="lab-row-text lab-row-submissions">Submission {{this.submissions}} of {{this.submission_max}}</p></div>
+                        <div class="col-1 ml-auto border-left text-center lab-row-right-div"><h4 class="lab-row-text lab-row-grade">{{this.grade}}</h4></div> --}}
                     
                 </div></a>
 
