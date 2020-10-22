@@ -32,9 +32,5 @@ module.exports.set = function (app) {
     });
 
 
-    // ENDPOINT THAT RECEIVES THE SUBMITTED FILE
-    app.post('/file-submission', (req, res) => {
-        // random redirect just for placeholder purposes
-        return res.redirect('/lab/5');
-    })
+   
 }
