@@ -18,11 +18,11 @@ let upload = multer({ dest: '../localspace' })
 
 module.exports.set = function (app) {
     // ENDPOINT THAT RECEIVES THE SUBMITTED FILE
-    app.post('/file-submission', upload.any({storage:storage}),(req, res) => {
+    app.post('/file-submission/:labId', async (req, res) => {
         // random redirect just for placeholder purposes
 
         //HANDLE FILE HERE
-        console.log(req.file)
+        db.query('SELECT ')
 
     })
 }
