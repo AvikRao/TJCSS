@@ -58,8 +58,9 @@ module.exports.set = function (app) {
 
 
     // ENDPOINT THAT RECEIVES THE SUBMITTED FILE
-    app.post('/file-submission', (req, res) => {
+    app.post('/file-submission/:labId', (req, res) => {
         // random redirect just for placeholder purposes
-        return res.redirect('/lab/5');
+        let labId = req.params.labId;
+        return res.redirect(`/lab/${labId}`);
     })
 }

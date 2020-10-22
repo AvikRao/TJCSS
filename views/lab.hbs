@@ -48,12 +48,11 @@
                     <div class="row file-upload">
                         <div class=" w-100 h-25">
                             <div id="dropzone">
-                                <form action="/file-submission" class="dropzone needsclick" id="submission-form" method="POST" enctype="multipart/form-data">
+                                <form action="/file-submission/{{data.id}}" class="dropzone needsclick" id="submission-form" method="POST" enctype="multipart/form-data">
                                     <div class="dz-message needsclick">    
                                         Drop files here or click to submit.<br>
                                         <span class="note needsclick">(Files are submitted <strong>immediately upon upload</strong>.)</span>
                                     </div>
-                                    <input type="hidden" id="submissionLabId" name="submissionLabId" value={{data.id}}>
                                 </form>
                             </div>
                         </div>
