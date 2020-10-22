@@ -120,6 +120,6 @@ dist
 
 *.DS_Store
 
-!localspace/README.md
-localspace/*
 
+localspace/*
+!localspace/README.md
