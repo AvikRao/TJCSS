@@ -5,7 +5,7 @@ let multer = require('multer')
 const storage = multer.diskStorage({
 
     destination: (req, file, cb) => {
-        cb(null, './routes/localspace');
+        cb(null, './localspace');
     },
     filename: (req, file, cb) => {
         let id = '123';
