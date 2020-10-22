@@ -2,27 +2,47 @@ const { exec } = require('child_process');
 const db = require('./db');
 let multer = require('multer')
 
-let storage = multer.diskStorage({
+const storage = multer.diskStorage({
 
     destination: (req, file, cb) => {
-        cb(null, '../localspace');
+        cb(null, './routes/localspace');
     },
     filename: (req, file, cb) => {
-        let id = req.session.userid
-        let ext = file.filename.match(/(\.[^.]+)$/);
-        cb(null, id+ext);
+        let id = '123';
+        console.log(file)
+        let ext = file.originalname.match(/(\.[^.]+)$/);
+        console.log('we got here')
+        console.log(id + ext[0])
+        cb(null, id + ext[0]);
     }
 })
 
-let upload = multer({ dest: '../localspace' })
+
 
 module.exports.set = function (app) {
     // ENDPOINT THAT RECEIVES THE SUBMITTED FILE
-    app.post('/file-submission/:labId', async (req, res) => {
+    let upload = multer({ storage: storage })
+    app.post('/file-submission/:labId', upload.single('file'), async (req, res) => {
         // random redirect just for placeholder purposes
 
         //HANDLE FILE HERE
-        db.query('SELECT ')
+        console.log('woah')
+
+        console.log('here')
+        console.log(req.file)
+        try {
+            let classid = await db.query('SELECT classid FROM labs WHERE id=%s ;', req.params.labId)[0];
+            let sclasses = await db.query('SELECT class FROM class_user WHERE uid=%s ;', req.session.userid);
+            console.log('wtf')
+            if (!sclasses.includes(classid))
+                throw Error('No permissions to submit to this lab!')
+            console.log('yeet')
+            return req.status(200).send('Success!')
+
+
+        } catch (e) {
+            res.redirect('/error')
+        }
 
     })
 }
