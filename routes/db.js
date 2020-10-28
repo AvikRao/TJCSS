@@ -12,7 +12,7 @@ const pool = new Pool( {
  * 
  * @param {String} query 
  * @param {Array} insertData 
- * @returns {Array}
+ * @returns {import('pg').QueryResult}
  * Accepts a PostgreSQL query and returns a Postgres <Result> object
  * 
  */

@@ -1,17 +1,21 @@
 const { exec } = require('child_process');
 let db = require('./db');
-let multer = require('multer')
+let multer = require('multer');
+let pcess = require('./process');
+let fs = require('fs/promises');
 
 const storage = multer.diskStorage({
 
-    destination: (req, file, cb) => {
-        cb(null, './localspace');
+    destination: async (req, file, cb) => {
+
+        //let id = req.session.id+':'+req.params.labId;
+        let id = 34467+':'+req.params.labId;
+        await fs.mkdir('./localspace/' + id)
+        cb(null, './localspace/'+id);
+        //filepath starts at main application file root for whatever fucking reason
     },
     filename: (req, file, cb) => {
-        let id = '123';
-        let ext = file.originalname.match(/(\.[^.]+)$/);
-
-        cb(null, id + ext[0]);
+        cb(null, file.originalname);
     }
 })
 
@@ -21,14 +25,13 @@ module.exports.set = function (app) {
     // ENDPOINT THAT RECEIVES THE SUBMITTED FILE
     let upload = multer({ storage: storage });
     app.post('/file-submission/:labId', upload.single('file'), async (req, res) => {
-        // random redirect just for placeholder purposes
 
         //HANDLE FILE HERE
         try {
 
             let classid = await db.query('SELECT classid FROM labs WHERE id=%s;', req.params.labId);
             //fetch class id from the lab. if nothing returns, the lab doesnt exist
-            if(!classid.rows)
+            if (!classid.rows)
                 throw Error('No matching information for submission found!')
 
 
@@ -43,8 +46,18 @@ module.exports.set = function (app) {
 
             if (!sclasses.rows[0] == classid.rows[0])
                 throw Error('No permissions to submit to this lab!');
-            return res.status(200).send('Success!')
 
+
+
+
+
+
+            //if(!await pcess.checkExt(req.file.filename, req.params.labId))
+            //    throw Error('Incorrect file format!')
+            //await pcess.storeFile(req.file.filename, false, req.params.labId)
+
+            res.status(200).send('Success!')
+            return;
 
         } catch (e) {
             return res.status(404).send(e.message);
