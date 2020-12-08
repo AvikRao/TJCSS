@@ -3,15 +3,23 @@ let db = require('./db');
 let multer = require('multer');
 let pcess = require('./process');
 let fs = require('fs/promises');
+let path = require('path')
 
 const storage = multer.diskStorage({
 
     destination: async (req, file, cb) => {
 
-        //let id = req.session.id+':'+req.params.labId;
-        let id = 34467+':'+req.params.labId;
-        await fs.mkdir('./localspace/' + id)
-        cb(null, './localspace/'+id);
+        //let id = req.session.id+'-'+req.params.labId;
+        let id = 34467 + '-' + req.params.labId;
+        
+        try{
+            await fs.rmdir('./localspace/' + id, {recursive:true});
+            await fs.mkdir('./localspace/' + id);
+        } catch(e){
+            console.log(e)
+            await fs.mkdir('./localspace/' + id);
+        }
+        cb(null, './localspace/' + id);
         //filepath starts at main application file root for whatever fucking reason
     },
     filename: (req, file, cb) => {
@@ -47,15 +55,14 @@ module.exports.set = function (app) {
             if (!sclasses.rows[0] == classid.rows[0])
                 throw Error('No permissions to submit to this lab!');
 
-
-
-
+                let id = 34467 + '-' + req.params.labId;
 
 
             //if(!await pcess.checkExt(req.file.filename, req.params.labId))
             //    throw Error('Incorrect file format!')
-            //await pcess.storeFile(req.file.filename, false, req.params.labId)
-
+            //await pcess.storeFile(id+'/'+req.file.filename, req.file.filename , false, req.params.labId)
+            await pcess.fetchFile(10, './localspace/' + id + '/');
+            await pcess.run('./localspace/' + id + '/' + 'testing.java')
             res.status(200).send('Success!')
             return;
 
