@@ -2,7 +2,8 @@ const { spawn } = require('child_process')
 let db = require('./db');
 let fs = require('fs').promises;
 let nfs = require('fs');
-
+const { java } =  require('compile-run');
+//TODO make this the task delegator to minion servers
 
 /**
  * Helper to call the needed processes per 
@@ -26,9 +27,9 @@ async function fetchFile(fid, path) {
     throw new Error('File not found');
   }
   response.rows.forEach(async (v, i) => {
-    console.log(v.content)
-    console.log(typeof v.content)
-    console.log(path)
+    //console.log(v.content)
+    //console.log(typeof v.content)
+    //console.log(path)
     nfs.writeFileSync(path + v.name, v.content);
     //console.log(a);
   });
@@ -62,7 +63,7 @@ async function checkExt(filename, labid) {
  */
 async function storeFile(path, name, isAttachment, labid) {
   let content = await fs.readFile('./localspace/' + path);
-  console.log(content.toString())
+  //console.log(content.toString())
   let e = content.toString().split('.')[1]
   await db.query('INSERT INTO files (content, extension, name) VALUES (%L, %L, %L);', content.toString(), e, name);
 
@@ -80,27 +81,13 @@ async function resetDir() {
  */
 async function run(path, ...args) {
   if (path.endsWith('.java')) {
-    path = path.replace(':', '\:')
-    let n = path.replace('.java', '')
-    let fpath = n.replace('testing', '')
-    let child = await spawn(`ls`, {
-         stdio: [process.stdin, process.stdout, process.stderr]});
-
-    //`cd ${n.replace('testing', '')} && java testing`
-    // let c2 = await spawn('ls .', {
-    //   stdio: [process.stdin, process.stdout, process.stderr],
-    //   env: {
-    //     PATH: process.env.PATH
-    //   }
-    // })
-
-    // let c3 = spawn('ls', [], {
-    //     stdio: [process.stdin, process.stdout, process.stderr]
-    // })
-    console.log('aa?')
+    
+    let res = await java.runFile(path);
+    console.log(res)
+    
       
   }
-}
+} 
 
 
 
