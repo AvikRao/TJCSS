@@ -85,6 +85,11 @@ module.exports.set = function(app){
             if (users.rows.length == 0) {
                 console.log("creating new user!");
                 await db.query('INSERT INTO users (id, isTeacher, namestr) VALUES (%s, %L, %L);', req.session.userid, req.session.is_teacher, req.session.display_name);
+<<<<<<< HEAD
+=======
+            } else {
+                req.session.is_teacher = users.rows[0].isteacher;
+>>>>>>> allen-dev
             }
 
         }).catch(()=>{

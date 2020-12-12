@@ -55,24 +55,41 @@ module.exports.set = function (app) {
 
     app.get('/class/:classId', (req, res) => {
 
+        // TEST DATA FOR STUDENT VIEW
+        // testdata.labs.forEach((obj) => {
+        //     let now = Date.now();
+        //     let deadline = Date.parse(obj.deadline);
+    
+        //     if (deadline < now || obj.submissions == obj.submission_max) obj.status = "completed";
+        //     else if (obj.submissions == 0) obj.status = "unsubmitted";
+        //     else obj.status = "submitted";
+    
+        //     obj.submissions_remaining = obj.submission_max - obj.submissions;
+        // });
+
+        // TEST DATA FOR TEACHER VIEW
+        testdata.id = req.params.classId;
         testdata.labs.forEach((obj) => {
             let now = Date.now();
             let deadline = Date.parse(obj.deadline);
     
-            if (deadline < now || obj.submissions == obj.submission_max) obj.status = "completed";
-            else if (obj.submissions == 0) obj.status = "unsubmitted";
-            else obj.status = "submitted";
-    
-            obj.submissions_remaining = obj.submission_max - obj.submissions;
+            if (deadline < now) obj.status = "passed";
+            else obj.statis == "upcoming";
+
         });
-        
-        testdata.labs = transform(testdata.labs);
-        console.log(testdata.labs);
-        res.render('class', { user: req.session ? (req.session.exists ? req.session : false) : false, data: testdata });
+
+        testdata.labs = transformTeacher(testdata.labs);
+
+        // STUDENT VIEW LINE
+        // res.render('class', { user: req.session ? (req.session.exists ? req.session : false) : false, data: testdata });
+
+        // TEACHER VIEW LINE
+        res.render('classteacher', { user: req.session ? (req.session.exists ? req.session : false) : false, data: testdata});
     });
+
 }
 
-function transform ( arr ) {
+function transformStudent ( arr ) {
     let result = []
     let completed = [];
     let unsubmitted = [];
@@ -89,6 +106,26 @@ function transform ( arr ) {
     submitted.sort((a, b) => (Date.parse(a.deadline) > Date.parse(b.deadline)) ? 1 : -1);
 
     result = unsubmitted.concat(submitted).concat(completed);
+
+    console.log(result);
+
+    return result;
+}
+
+function transformTeacher ( arr ) {
+    let result = []
+    let upcoming = [];
+    let passed = [];
+
+    arr.forEach( (obj) => {
+        if (obj.status == 'upcoming') upcoming.push(obj);
+        else if (obj.status == 'passed') passed.push(obj);
+    });
+
+    passed.sort((a, b) => (Date.parse(a.deadline) < Date.parse(b.deadline)) ? 1 : -1);
+    passed.sort((a, b) => (Date.parse(a.deadline) > Date.parse(b.deadline)) ? 1 : -1);
+
+    result = upcoming.concat(passed);
 
     console.log(result);
 

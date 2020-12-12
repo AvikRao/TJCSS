@@ -3,6 +3,11 @@ let app = express();
 let hbs = require('hbs');
 let path = require('path');
 let cookieSession = require('cookie-session')
+var bodyParser = require('body-parser');
+
+
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false })) 
 
 let routes = require('./routes')
 app.use(express.static('static'));
@@ -17,7 +22,7 @@ app.set('view engine', 'hbs');
 app.set('trust proxy', 1)
 app.use(cookieSession({
 	name: 'peppermint',
-	keys: ['director Broke have a nice day', '1123xXx_pHasZe_qu1ckSc0p3r_xXx1123']
+	keys: ['director Broke have a nice day', '1123xXx_pHasZe_qu1ckSc0p3r_xXx1123'],
 }))
 
 
