@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>TJCSS</title>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+
+        <link rel="stylesheet" href="/css/main.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.5.1/min/dropzone.min.css">
+
+    </head>
+    <body>
+        {{> navbar}}
+        <div class="dashboard-container">
+
+            <h1 class="text-white mb-4">{{data.name}}</h1>
+            <hr class="box-hr">
+
+            <div class="row lab-main-container">
+                <div class="col-5 description-container mr-auto">
+
+                    <div class="description-container-inner ">
+                        <h4>Deadline: {{data.deadline}}</h4>
+                        <h4>Max Submissions: {{data.max_submissions}}</h4>
+                        <br>
+                        <h4>Description</h4>
+                        <hr class="box-hr">
+                        <p>{{data.description}}</p>
+
+                        <div class="attached-files">
+                            <h5>Attached Files</h5>
+                            {{#each data.attached_files}}
+                            <a href="/" style="color: inherit;"><div class="row attached-files-list-item">
+                                <div class="col-11">
+                                    {{this.file_name}}
+                                </div>
+                                <div class="col-1 download-button">
+                                    <img src="/media/download.png" id="inline-download-icon"></button>
+                                </div>
+                            </div></a>
+                            {{/each}}
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="col-6 lab-right-container ml-auto lab-col-right ">
+
+                    <div class="row file-upload">
+                        <div class=" w-100 h-25">
+                            <div id="dropzone">
+                                <form action="/file-submission/{{data.id}}" class="dropzone needsclick" id="submission-form" method="POST" enctype="multipart/form-data">
+                                    <div class="dz-message needsclick">    
+                                        Drop files here or click to submit.<br>
+                                        <span class="note needsclick">(Files are submitted <strong>immediately upon upload</strong>.)</span>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row submission-output h-75">
+                        <div class="col-12">
+                            <div class="row output-header">
+                                <h2>Output</h2>
+                            </div>
+                            <div class="row output-body">
+                                <p>Initiating script... <br> Installing npm packages... <br> Installed! <br> <br> Running script...</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                </div>
+            </div>
+
+            {{#if data.latest_submission}}
+                <h2 class="text-white mb-4 mt-3">Latest submission</h2>
+                <hr class="box-hr">
+                <a href="{{this.id}}">
+                <div class="row submission-list-item">
+
+                        <div class="col-1 submission-status-{{this.latest_submission.status}} submission-row-height hvr-grow"></div>
+                        <div class="col-5"><h1 class='submission-row-text submission-row-title'>{{data.latest_submission.file_name}}</h1></div>
+                        <div class="col-2 ml-auto text-center"><p class="submission-row-text submission-row-submissions">Submission <strong>{{data.latest_submission.submission_count}}</strong> of {{data.max_submissions}}</p></div>
+                        <div class="col-1 ml-auto border-left text-center submission-row-right-div"><h4 class="submission-row-text submission-row-grade">{{data.latest_submission.grade}}</h4></div>
+                    
+                </div></a>
+            {{/if}}
+
+        </div>
+
+        {{> scripts}}
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.5.1/min/dropzone.min.js"></script>
+        <script src="/js/lab.js"></script>
+    </body>
+</html>
