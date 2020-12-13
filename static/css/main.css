@@ -193,28 +193,6 @@ body {
 
 a, a:link, a:hover, a:active {
     text-decoration: none !important;
-=======
-#logout-dropdown .dropdown-menu{
-    background-color: rgba(0, 0, 0, 0.55);
-}
-
-#logout-dropdown .dropdown-menu a{
-    color: #ffffff;
-}
-
-#main-box {
-    background-color:rgba(0, 0, 0, 0.4);
-    border-radius: 25px;
-}
-
-#inline-ion-icon {
-    height: 1em;
-    transition: filter 0.15s ease-in-out;
-}
-
-#ion-login-button:hover #inline-ion-icon {
-    filter: invert(100%);
-
 }
 
 #logout-dropdown .dropdown-menu{
