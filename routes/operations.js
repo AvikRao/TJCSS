@@ -1,24 +1,34 @@
-const { spawn } = require('child_process')
 let db = require('./db');
 let fs = require('fs').promises;
 let nfs = require('fs');
-const { java } =  require('compile-run');
-//TODO make this the task delegator to minion servers
+const { java, python } = require('compile-run');
 
 /**
- * Helper to call the needed processes per 
- * @param {String} f1 Path to student file f1 within ./localspace/uniquefile
- * @param {*} utest Path to unit test within ./localspace/uniquefile
+ * Helper to call the needed processes 
+ * @param {String} f1 Path to student file f1 within ./localspace/lab-userid
+ * @param {*} utest Path to unit test within ./localspace/lab-userid
  */
-function grade(f1, utest) {
+function grade(id, f1, utest) {
+  let fid = id + '-' + req.params.labId;
 
+
+  if (!await pcess.checkExt(f1, req.params.labId))
+    throw Error('Incorrect file format!')
+  //await pcess.storeFile(id+'/'+req.file.filename, req.file.filename , false, req.params.labId)
+  
+  //fetch grader file?
+  await pcess.fetchFile(10, './localspace/' + fid + '/');
+  
+  
+  //run the damned file
+  await pcess.run('./localspace/' + fid + '/' + 'testing.java');
 }
 
 /**
  * Fetches a file given its fid from database.
  * Stores it in a path in the directory.
  * @param {Number} fid 
- * @param {string} path 
+ * @param {string} path the directory to store in
  */
 async function fetchFile(fid, path) {
   let response = await db.query('SELECT * FROM files WHERE id=%s', fid);
@@ -27,11 +37,8 @@ async function fetchFile(fid, path) {
     throw new Error('File not found');
   }
   response.rows.forEach(async (v, i) => {
-    //console.log(v.content)
-    //console.log(typeof v.content)
-    //console.log(path)
     nfs.writeFileSync(path + v.name, v.content);
-    //console.log(a);
+
   });
 
   //put file in directory
@@ -63,7 +70,6 @@ async function checkExt(filename, labid) {
  */
 async function storeFile(path, name, isAttachment, labid) {
   let content = await fs.readFile('./localspace/' + path);
-  //console.log(content.toString())
   let e = content.toString().split('.')[1]
   await db.query('INSERT INTO files (content, extension, name) VALUES (%L, %L, %L);', content.toString(), e, name);
 
@@ -76,18 +82,21 @@ async function resetDir() {
 /**
  * 
  * @param {String} path 
- * @param {String} id
+ * @param {Object} params 
  * @param  {...any} args 
  */
-async function run(path, ...args) {
+async function run(path,{timeout, input}, ...args) {
   if (path.endsWith('.java')) {
-    
+
     let res = await java.runFile(path);
     console.log(res)
-    
-      
+
+
+  } else if(path.endsWith('.py')){
+    let res = await python.runFile(path, {executionPath: "python3.8"})
+
   }
-} 
+}
 
 
 
@@ -95,5 +104,6 @@ module.exports.storeFile = storeFile;
 module.exports.checkExt = checkExt;
 module.exports.resetDir = resetDir;
 module.exports.fetchFile = fetchFile;
+module.exports.grade = grade;
 module.exports.run = run;
 
