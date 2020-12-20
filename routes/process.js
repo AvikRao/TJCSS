@@ -2,17 +2,8 @@ const { spawn } = require('child_process')
 let db = require('./db');
 let fs = require('fs').promises;
 let nfs = require('fs');
-const { java } =  require('compile-run');
-//TODO make this the task delegator to minion servers
-
-/**
- * Helper to call the needed processes per 
- * @param {String} f1 Path to student file f1 within ./localspace/uniquefile
- * @param {*} utest Path to unit test within ./localspace/uniquefile
- */
-function grade(f1, utest) {
-
-}
+const p = require('path')
+const { java, python } = require('compile-run');
 
 /**
  * Fetches a file given its fid from database.
@@ -27,11 +18,8 @@ async function fetchFile(fid, path) {
     throw new Error('File not found');
   }
   response.rows.forEach(async (v, i) => {
-    //console.log(v.content)
-    //console.log(typeof v.content)
-    //console.log(path)
-    nfs.writeFileSync(path + v.name, v.content);
-    //console.log(a);
+    nfs.writeFileSync(p.join(path,v.name), v.content);
+
   });
 
   //put file in directory
@@ -55,23 +43,22 @@ async function checkExt(filename, labid) {
 }
 
 /**
- * 
+ * Stores a file in the files table. Update the lab table elsewhere, idiot
+ * Returns array of objects containing id as property
  * @param {String} path from ./localspace/
  * @param {String} name 
- * @param {boolean} isAttachment 
- * @param {String} labid 
  */
-async function storeFile(path, name, isAttachment, labid) {
+async function storeFile(path, name) {
   let content = await fs.readFile('./localspace/' + path);
   //console.log(content.toString())
   let e = content.toString().split('.')[1]
-  await db.query('INSERT INTO files (content, extension, name) VALUES (%L, %L, %L);', content.toString(), e, name);
+  return await db.query('INSERT INTO files (content, extension, name) VALUES (%L, %L, %L) RETURNING id;', content.toString(), e, name)
+  .rows[0].id;
 
 }
 
-async function resetDir() {
-  await fs.rmdir('./localspace');
-  await init()
+async function resetDir(dirpath) {
+  await fs.rmdir(p.join('./localspace/', dirpath));
 }
 /**
  * 
@@ -79,16 +66,9 @@ async function resetDir() {
  * @param {String} id
  * @param  {...any} args 
  */
-async function run(path, ...args) {
-  if (path.endsWith('.java')) {
-    
-    let res = await java.runFile(path);
-    console.log(res)
-    
-      
-  }
-} 
-
+async function run(path,{timeout, input}, ...args) {
+  //assign the task to the queue
+}
 
 
 module.exports.storeFile = storeFile;
