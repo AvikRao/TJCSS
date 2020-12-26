@@ -1,4 +1,3 @@
-const { spawn } = require('child_process')
 let db = require('./db');
 let fs = require('fs').promises;
 let nfs = require('fs');
@@ -6,10 +5,31 @@ const p = require('path')
 const { java, python } = require('compile-run');
 
 /**
+ * Helper to call the needed processes 
+ * @param {String} f1 Path to student file f1 within ./localspace/lab-userid
+ * @param {*} utest Path to unit test within ./localspace/lab-userid
+ */
+function grade(id, f1, utest) {
+  let fid = id + '-' + req.params.labId;
+
+
+  if (!await pcess.checkExt(f1, req.params.labId))
+    throw Error('Incorrect file format!')
+  //await pcess.storeFile(id+'/'+req.file.filename, req.file.filename , false, req.params.labId)
+  
+  //fetch grader file?
+  await pcess.fetchFile(10, './localspace/' + fid + '/');
+  
+  
+  //run the damned file
+  //TODO
+}
+
+/**
  * Fetches a file given its fid from database.
  * Stores it in a path in the directory.
  * @param {Number} fid 
- * @param {string} path 
+ * @param {string} path the directory to store in
  */
 async function fetchFile(fid, path) {
   let response = await db.query('SELECT * FROM files WHERE id=%s', fid);
@@ -18,7 +38,7 @@ async function fetchFile(fid, path) {
     throw new Error('File not found');
   }
   response.rows.forEach(async (v, i) => {
-    nfs.writeFileSync(p.join(path,v.name), v.content);
+    nfs.writeFileSync(p.join(path, v.name), v.content);
 
   });
 
@@ -43,37 +63,48 @@ async function checkExt(filename, labid) {
 }
 
 /**
- * Stores a file in the files table. Update the lab table elsewhere, idiot
- * Returns array of objects containing id as property
+ * 
  * @param {String} path from ./localspace/
  * @param {String} name 
+ * @param {boolean} isAttachment 
+ * @param {String} labid 
  */
-async function storeFile(path, name) {
+async function storeFile(path, name, isAttachment, labid) {
   let content = await fs.readFile('./localspace/' + path);
-  //console.log(content.toString())
   let e = content.toString().split('.')[1]
-  return await db.query('INSERT INTO files (content, extension, name) VALUES (%L, %L, %L) RETURNING id;', content.toString(), e, name)
-  .rows[0].id;
+  await db.query('INSERT INTO files (content, extension, name) VALUES (%L, %L, %L);', content.toString(), e, name);
 
 }
 
-async function resetDir(dirpath) {
-  await fs.rmdir(p.join('./localspace/', dirpath));
+async function resetDir() {
+  await fs.rmdir('./localspace');
+  await init()
 }
 /**
  * 
  * @param {String} path 
- * @param {String} id
+ * @param {Object} params 
  * @param  {...any} args 
  */
 async function run(path,{timeout, input}, ...args) {
-  //assign the task to the queue
+  if (path.endsWith('.java')) {
+
+    let res = await java.runFile(path);
+    console.log(res)
+
+
+  } else if(path.endsWith('.py')){
+    let res = await python.runFile(path, {executionPath: "python3.8"})
+
+  }
 }
+
 
 
 module.exports.storeFile = storeFile;
 module.exports.checkExt = checkExt;
 module.exports.resetDir = resetDir;
 module.exports.fetchFile = fetchFile;
+module.exports.grade = grade;
 module.exports.run = run;
 

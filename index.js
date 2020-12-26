@@ -15,6 +15,8 @@ hbs.registerPartials(__dirname + '/views/partials');
 
 app.use(express.static('static'));
 
+app.use('/socket.io', express.static(__dirname + '/node_modules/socket.io/client-dist'));
+
 app.set('port', process.env.PORT || 8080);
 
 app.set('view engine', 'hbs');
@@ -24,7 +26,6 @@ app.use(cookieSession({
 	name: 'peppermint',
 	keys: ['director Broke have a nice day', '1123xXx_pHasZe_qu1ckSc0p3r_xXx1123'],
 }))
-
 
 routes.set(app);
 
