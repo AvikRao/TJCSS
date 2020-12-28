@@ -9,34 +9,36 @@
         <link rel="stylesheet" href="/css/main.css">
         <link rel="stylesheet" href="/css/hover-min.css">
     </head>
-    <body>
+    <body class="body-addlab">
         {{> navbar}}
 
-        <div class="container text-white mt-5 px-5 py-5" id="main-box">
+        <div class="container text-white my-5 px-5 py-5" id="main-box">
             <h1 class='display-4 mb-4'>Create new lab</h1>
 
             <form action="/addlabverify" method="POST">
                 <div class="form-group">
                     <label for="labNameInput">Lab name</label>
-                    <input type="text" class="form-control w-75" id="labNameInput" placeholder="Breadth First Search Lab 1" maxlength="35" name="labNameInput" required>
+                    <input type="text" class="form-control" id="labNameInput" placeholder="Breadth First Search Lab 1" maxlength="35" name="labNameInput" required>
                 </div>
                 
                 <div class="form-group"> 
                     <label for="labDescriptionInput">Description</label>
-                    <textarea class="form-control w-75" id="labDescriptionInput" placeholder="Breadth-first search is an algorithm for traversing or searching tree or graph data structures. It starts at the tree root, and explores all of the neighbor nodes at the present depth prior to moving on to the nodes at the next depth level." maxlength="4000" name="labDescriptionInput" required></textarea>
+                    <textarea class="form-control" id="labDescriptionInput" placeholder="Breadth-first search is an algorithm for traversing or searching tree or graph data structures. It starts at the tree root, and explores all of the neighbor nodes at the present depth prior to moving on to the nodes at the next depth level." maxlength="4000" name="labDescriptionInput"></textarea>
                 </div>
 
                 <div class="form-group">
                     <label for="labLanguageInput">Lab Language</label>
                     <br>
-                    <select name="labLanguageInput" id="labLanguageInput" class="form-control w-25 mb-4">
+                    <select name="labLanguageInput" id="labLanguageInput" class="form-control w-25 mb-4" required>
+                        <option disabled selected value>-- Pick language --</option>
                         <option>Python</option>
                         <option>Java</option>
                         <option>C++</option>
+                        <option>Other</option>
                     </select>
                 </div>
 
-                <hr class="box-hr">
+                <hr class="box-hr" align="left">
 
                 <div class="form-group">
                     <label for="deadlineBoolInput">Deadline</label>
@@ -53,14 +55,17 @@
                     <input type="number" id="submissionLimitInput" name="submissionLimitBoolInput" class="mb-3" disabled> 
                 </div>
 
-                <hr class="box-hr">
+                <hr class="box-hr" align="left">
 
                 <div class="form-group autograding-group">
                     <label for="autogradingBoolInput">Automatically Grade Lab</label>
                     <input type="checkbox" id="autogradingBoolInput" name="autogradingBoolInput">
                     <br>
                     <label for="graderFileUpload">Grader File</label>
-                    <input type="file" name="graderFileUpload" id="graderFileUpload" class="form-control-file" disabled>
+                    <input type="file" name="graderFileUpload" id="graderFileUpload" class="form-control-file mb-2" disabled>
+                    <label for="showStudentOutputBoolInput">Return output to students</label>
+                    <input type="checkbox" id="showStudentOutputBoolInput" name="showStudentOutputBoolInput" disabled>
+                    <hr class="box-hr">
                 </div>
 
                 <div class="form-group">

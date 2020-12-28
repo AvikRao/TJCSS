@@ -35,8 +35,11 @@ $(function () {
     $("#autogradingBoolInput").on("click", function () {
         if ($(this).is(":checked")) {
             $("#graderFileUpload").prop("disabled", false);
+            $("#showStudentOutputBoolInput").prop("disabled", false);
         } else {
             $("#graderFileUpload").prop("disabled", true);
+            $("#showStudentOutputBoolInput").prop("disabled", true);
+            
         }
     });
 });
