@@ -10,8 +10,16 @@
         {{> navbar}}
         <div class="dashboard-container">
 
-                    
-            <h1 class="text-white mb-4">{{data.className}}</h1>
+            <div class="row no-gutters">
+                <div class="col-11">
+                    <h1 class="text-white mb-4">{{data.className}}</h1>
+                </div>
+
+                <div class="col-1">
+                   <a href="/addlab"><button class="btn btn-outline-light h-75 ml-auto" id="add-btn"><img src="/media/plus.png" id="inline-add-icon">Add Lab</button></a>
+                </div>
+                
+            </div>    
             <hr class="box-hr">
 
             {{#each data.labs}}

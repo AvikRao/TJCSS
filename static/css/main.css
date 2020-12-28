@@ -380,3 +380,12 @@ label {
 .submission-row-right-div {
     margin-left: 0 !important;
 }
+
+#deadlineBoolInput, #submissionBoolInput, #gradingBoolInput, #autogradingBoolInput {
+    width: 1em;
+    height: 1em;
+}
+
+#labDescriptionInput {
+    height: 7em;
+}

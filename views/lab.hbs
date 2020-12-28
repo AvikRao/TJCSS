@@ -22,23 +22,26 @@
                         <h4>Deadline: {{data.deadline}}</h4>
                         <h4>Max Submissions: {{data.max_submissions}}</h4>
                         <br>
-                        <h4>Description</h4>
-                        <hr class="box-hr">
-                        <p>{{data.description}}</p>
-
-                        <div class="attached-files">
-                            <h5>Attached Files</h5>
-                            {{#each data.attached_files}}
-                            <a href="/" style="color: inherit;"><div class="row attached-files-list-item">
-                                <div class="col-11">
-                                    {{this.file_name}}
-                                </div>
-                                <div class="col-1 download-button">
-                                    <img src="/media/download.png" id="inline-download-icon"></button>
-                                </div>
-                            </div></a>
-                            {{/each}}
-                        </div>
+                        {{#if data.description}}
+                            <h4>Description</h4>
+                            <hr class="box-hr">
+                            <p>{{data.description}}</p>
+                        {{/if}}
+                        {{#if data.attached_files}}
+                            <div class="attached-files">
+                                <h5>Attached Files</h5>
+                                {{#each data.attached_files}}
+                                <a href="/" style="color: inherit;"><div class="row attached-files-list-item">
+                                    <div class="col-11">
+                                        {{this.file_name}}
+                                    </div>
+                                    <div class="col-1 download-button">
+                                        <img src="/media/download.png" id="inline-download-icon"></button>
+                                    </div>
+                                </div></a>
+                                {{/each}}
+                            </div>
+                        {{/if}}
                     </div>
 
                 </div>
