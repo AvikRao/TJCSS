@@ -39,6 +39,9 @@ module.exports.set = function (app) {
                 });
             };
         }
+        // REAL CODE REAL CODE REAL CODE REAL CODE REAL CODE REAL CODE REAL CODE REAL CODE REAL CODE REAL CODE REAL CODE REAL CODE REAL CODE REAL CODE REAL CODE 
+
+        res.render('dashboard', { user: req.session, classes:transform(realdata),});
 
     });
 
@@ -98,4 +101,5 @@ function transform ( arr ) {
 
 function isInt(s) {
     return /^\+?[1-9][\d]*$/.test(s);
+
 }

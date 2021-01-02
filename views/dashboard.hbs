@@ -1,115 +1,128 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <title>TJCSS | Dashboard</title>
-        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
 
-        <link rel="stylesheet" href="/css/main.css">
-        <link rel="stylesheet" href="/css/hover-min.css">
-    </head>
-    <body>
-        {{> navbar}}
+<head>
+    <title>TJCSS | Dashboard</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+        integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
 
-        <div class="dashboard-container">
-            <div class="row">
+    <link rel="stylesheet" href="/css/main.css">
+    <link rel="stylesheet" href="/css/hover-min.css">
+</head>
 
-                <div class="col-9 border-right">
-                    
-                    <div class="row">
-                        <div class="col-12 d-flex">
-                            <h1 class="text-white mb-4">Classes</h1>
-                            {{#if user.is_teacher}}
-                                <a href="/addclass" class="ml-auto"><button class="btn btn-outline-light h-75" id="add-btn"><img src="/media/plus.png" id="inline-add-icon">Add Class</button></a>
-                            {{else}}
-                                <button data-toggle="modal" data-target="#addClassModal" class="btn btn-outline-light h-75 ml-auto" id="add-btn"><img src="/media/plus.png" id="inline-add-icon">Add Class</button>
-                            {{/if}}
-                        </div>
+<body>
+    {{> navbar}}
+
+    <div class="dashboard-container">
+        <div class="row">
+
+            <div class="col-9 border-right">
+
+                <div class="row">
+                    <div class="col-12 d-flex">
+                        <h1 class="text-white mb-4">Classes</h1>
+                        {{#if user.is_teacher}}
+                        <a href="/addclass" class="ml-auto"><button class="btn btn-outline-light h-75" id="add-btn"><img
+                                    src="/media/plus.png" id="inline-add-icon">Add Class</button></a>
+                        {{else}}
+                        <button data-toggle="modal" data-target="#addClassModal"
+                            class="btn btn-outline-light h-75 ml-auto" id="add-btn"><img src="/media/plus.png"
+                                id="inline-add-icon">Add Class</button>
+                        {{/if}}
                     </div>
-                       
-                    <hr class="box-hr">
-                    <div class="row no-gutters">
+                </div>
+
+                <hr class="box-hr">
+                <div class="row no-gutters">
                     {{#each classes}}
-                        {{#each this}}
-                            <div class={{#if @first}}"col-3 my-2"{{else}}"col-3 offset-1 my-2"{{/if}}>
-                                <div class="card h-100">
-                                    <img class="card-img-top" src="/media/{{this.color}}.png" alt="Card image cap">
-                                    <div class="card-body rounded-bottom">
-                                        <div class='card-title-area'>
-                                            <h4 class="card-title">{{this.name}} <a data-toggle="modal" data-target="#modal{{this.id}}" ><img src="/media/gear.png" id="inline-gear-icon"></a></h4>
-                                            
-                                        </div>
-                                        <p>Instructor: {{this.teacher.name}}</p>
-                                        <a href="/class/{{this.id}}"><button class="btn btn-outline-light w-75 h-25 mt-2" type="submit">Go to class</button></a>
-                                    </div>
-                                </div>
-                            </div>
-                        {{/each}}
-                    {{/each}}
-                    </div>
-                </div>
-
-                <div class="col-3">
-                    <h1 class="text-white mb-4">Upcoming Labs</h1>
-                    <hr class="box-hr">
-                    <div class="card">
-                        <div class="card-body">
-                            <p class="card-text">This is an upcoming lab!</p>
-                        </div>
-                    </div>
-                </div>
-
-                {{#each classes}}
                     {{#each this}}
-                    <div class="modal fade" id="modal{{this.id}}" tabindex="-1" role="dialog" aria-hidden="true">
-                        <div class="modal-dialog modal-dialog-centered" role="document">
-                            <div class="modal-content">
-                            <div class="modal-header">
-                                <h4 class="modal-title" id="exampleModalLabel">{{this.name}}</h4>
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                                </button>
-                            </div>
-                            <div class="modal-body">
-                                <h5>Join Code: {{this.id}}</h5>
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                            </div>
+                    <div class={{#if @first}}"col-3 my-2"{{else}}"col-3 offset-1 my-2"{{/if}}>
+                        <div class="card h-100">
+                            <img class="card-img-top" src="/media/{{this.color}}.png" alt="Card image cap">
+                            <div class="card-body rounded-bottom">
+                                <div class='card-title-area'>
+                                    <h4 class="card-title">{{this.name}} <a data-toggle="modal"
+                                            data-target="#modal{{this.id}}"><img src="/media/gear.png"
+                                                id="inline-gear-icon"></a></h4>
+
+                                </div>
+                                <p>Instructor: {{this.teacher.name}}</p>
+                                <a href="/class/{{this.id}}"><button class="btn btn-outline-light w-75 h-25 mt-2"
+                                        type="submit">Go to class</button></a>
                             </div>
                         </div>
                     </div>
                     {{/each}}
-                {{/each}}
-
+                    {{/each}}
+                </div>
             </div>
-        </div>
 
-        <div class="modal fade" id="addClassModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="col-3">
+                <h1 class="text-white mb-4">Upcoming Labs</h1>
+                <hr class="box-hr">
+                <div class="card">
+                    <div class="card-body">
+                        <p class="card-text">This is an upcoming lab!</p>
+                    </div>
+                </div>
+            </div>
+
+            {{#each classes}}
+            {{#each this}}
+            <div class="modal fade" id="modal{{this.id}}" tabindex="-1" role="dialog" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title" id="exampleModalLabel">{{this.name}}</h4>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <h5>Join Code: {{this.id}}</h5>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {{/each}}
+            {{/each}}
+
+        </div>
+    </div>
+
+    <div class="modal fade" id="addClassModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Add class</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-                </button>
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Add class</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <div class="form-group">
+                            <label for="class-id-input" class="col-form-label">Class ID:</label>
+                            <input type="text" class="form-control" id="class-id-input" name="class-id-input">
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-light" data-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-light" onclick="verifyAdd();">Join class</button>
+                </div>
             </div>
-            <div class="modal-body">
-                <form>
-                    <div class="form-group">
-                        <label for="class-id-input" class="col-form-label">Class ID:</label>
-                        <input type="text" class="form-control" id="class-id-input" name="class-id-input">
-                    </div>
-                </form>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-outline-light" data-dismiss="modal">Cancel</button>
-                <button type="button" class="btn btn-light" onclick="verifyAdd();">Join class</button>
-            </div>
-            </div>
-        </div>
         </div>
 
-        {{> scripts}}
-        <script src="/js/dashboard.js" type="text/javascript"></script>
-    </body>
+    </div>
+
+
+    {{> scripts}}
+    <script src="/js/dashboard.js" type="text/javascript"></script>
+</body>
+
 </html>
