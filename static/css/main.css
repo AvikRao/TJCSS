@@ -38,6 +38,7 @@ body {
 #main-box {
     background-color:rgba(0, 0, 0, 0.4);
     border-radius: 25px;
+    width: 45%;
 }
 
 #inline-ion-icon {
@@ -379,4 +380,26 @@ label {
 
 .submission-row-right-div {
     margin-left: 0 !important;
+}
+
+#deadlineBoolInput, #submissionBoolInput, #gradingBoolInput, #autogradingBoolInput, #showStudentOutputBoolInput {
+    width: 1em;
+    height: 1em;
+}
+
+#labDescriptionInput {
+    height: 7em;
+}
+
+.body-addlab {
+    padding-bottom: 50px;
+    margin-bottom: 50px;;
+}
+
+.autograding-group {
+    display: none;
+}
+
+label[for="showStudentOutputBoolInput"], label[for="graderFileUpload"] {
+    font-size: 1.25em !important;
 }
