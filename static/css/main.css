@@ -307,6 +307,7 @@ label {
     border-radius: 10px;
     color: #ffffff;
     border: 2px solid rgba(255, 255, 255, 0.4);
+    height: 60%;
 }   
 
 .lab-main-container {
@@ -402,4 +403,13 @@ label {
 
 label[for="showStudentOutputBoolInput"], label[for="graderFileUpload"] {
     font-size: 1.25em !important;
+}
+
+.pageend-space {
+    height: 3em;
+}
+
+#dropzone-submit-button, #dropzone-clear-button {
+    width: 49%;
+    box-shadow: none;
 }

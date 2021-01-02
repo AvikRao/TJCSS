@@ -14,6 +14,7 @@ app.use(express.static('static'));
 hbs.registerPartials(__dirname + '/views/partials');
 
 app.use(express.static('static'));
+app.use('/socket.io', express.static(__dirname + '/node_modules/socket.io/client-dist')); 
 
 app.set('port', process.env.PORT || 8080);
 

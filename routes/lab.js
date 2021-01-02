@@ -53,6 +53,7 @@ module.exports.set = function (app) {
     }
 
     app.get('/lab/:labId', (req, res) => {
+        testdata.id = req.params.labId;
         return res.render('lab', { user: req.session ? (req.session.exists ? req.session : false) : false, data: testdata });
     });
 
