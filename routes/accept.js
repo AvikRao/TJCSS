@@ -41,22 +41,22 @@ module.exports.set = function (app) {
     // ENDPOINT THAT RECEIVES THE SUBMITTED FILE
     let upload = multer({ storage: storage });
 
-    //STUDENT SUBMISSIONS ONLY
+
 
     //note: tell avik that the field name is 'files'
     //TEACHER GRADER SUBMISSION ONLY
-    app.post('/grader-submission/:labId',upload.any('files'), async (req,res)=>{
+    app.post('/grader-file/:labId',upload.any('files'), async (req,res)=>{
         try{
             let classid = await db.query('SELECT classid FROM labs WHERE id=%s;', req.params.labId);
             //fetch class id from the lab. if nothing returns, the lab doesnt exist
             if (!classid.rows)
-                throw Error('No matching information for submission found!')
+                throw ErrorResponse('No matching information for submission found!', 404)
 
 
             let sclasses = await db.query('SELECT class FROM class_user WHERE uid=%s;', req.session.userid);
 
             if (!sclasses.rows[0] == classid.rows[0])
-                throw Error('No permissions to submit to this lab!');
+                throw ErrorResponse('No permissions to submit to this lab!');
 
             //remove all previous grader files in the database
             //put these files in the database

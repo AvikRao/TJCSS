@@ -13,12 +13,12 @@ function grade(id, f1, utest) {
   let fid = id + '-' + req.params.labId;
 
 
-  if (!await pcess.checkExt(f1, req.params.labId))
+  if (!await checkExt(f1, req.params.labId))
     throw Error('Incorrect file format!')
   //await pcess.storeFile(id+'/'+req.file.filename, req.file.filename , false, req.params.labId)
   
   //fetch grader file?
-  await pcess.fetchFile(10, './localspace/' + fid + '/');
+  await fetchFile(10, './localspace/' + fid + '/');
   
   
   //run the damned file

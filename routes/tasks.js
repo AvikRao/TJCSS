@@ -25,8 +25,8 @@ var queue = async.queue(async function (obj, callback) {
     io.to(obj.client_id).emit("system", `Starting process ${obj.process_id}...\n`); // alert client that queue has reached this process and is starting
     let output = await runFile(obj.filename, obj.directory, obj.args ?? [], obj.process_id, obj.client_id); // runs the file and gets the output
     //TODO DB QUERY HERE stores output for future retrieval if necessary
-
-
+    
+    db.query('INSERT')
 
 
     // If the subdirectory was created by the process (AKA this process is not a testing file in the testing folder), delete the subdirectory
