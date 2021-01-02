@@ -119,3 +119,6 @@ dist
 .pnp.*
 
 *.DS_Store
+
+localspace/*
+!localspace/README.md

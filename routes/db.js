@@ -1,7 +1,7 @@
 const { Pool } = require('pg');
 let format = require('pg-format')
 const pool = new Pool( {
-    connectionString:process.env.DATABASE_URL,
+    connectionString:process.env.DATABASE_URL+'?sslmode=require',
     max:19,
     ssl: {
         rejectUnauthorized: false
@@ -12,8 +12,8 @@ const pool = new Pool( {
  * 
  * @param {String} query 
  * @param {Array} insertData 
- * @returns {Array}
- * Accepts a PostgreSQL query and an array of data values to format
+ * @returns {import('pg').QueryResult}
+ * Accepts a PostgreSQL query and returns a Postgres <Result> object
  * 
  */
 async function query(query, ...args){
