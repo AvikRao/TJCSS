@@ -8,7 +8,7 @@ let db = require('./db')
 
 let ion_client_id = 'BjVuRUFYrXCdjYvtopJjJoBQozRVQxEMd6rijQsu'
 let ion_client_secret = 'OtFMc19R2hwJmCv3n7EfFTQDTpckHzuRP8sVG1EW4St40xHbIwXuKTT0LZxKK1lJ6Xhkr76EwyOlvkHRpBKDaO8gEzzvjTLhHjzIopL1V2s4oQfdl2TUw3hSVC9tt3AH'
-let ion_redirect_uri = 'http://52.146.18.230:8080/oauth'
+let ion_redirect_uri = 'https://tjcss.herokuapp.com/oauth'
 
 let oauth2 = simpleoauth2.create({ //create oauth client
     client: {

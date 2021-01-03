@@ -325,6 +325,8 @@ label {
     padding-top: 15px;
     padding-left: 15px;
     padding-bottom: 10px;
+    overflow-y: auto;
+    overflow: auto !important;
 }
 
 .submission-list-item {
@@ -413,3 +415,26 @@ label[for="showStudentOutputBoolInput"], label[for="graderFileUpload"] {
     width: 49%;
     box-shadow: none;
 }
+
+.stdout-output {
+    color: #ffffff;
+}
+
+.system-output {
+    color: #ffdb58;
+}
+
+.error-output {
+    color: #FF0000;
+}
+
+.success-output {
+    color: #00ff00;
+}
+
+.timeout-output {
+    color: #FF0000;
+}
+
+
+

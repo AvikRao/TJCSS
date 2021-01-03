@@ -1,7 +1,7 @@
 const { Pool } = require('pg');
 let format = require('pg-format')
 const pool = new Pool( {
-    connectionString:process.env.DATABASE_URL+'?sslmode=require',
+    connectionString:process.env.DATABASE_URL,
     max:19,
     ssl: {
         rejectUnauthorized: false
