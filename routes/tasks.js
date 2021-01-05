@@ -12,27 +12,33 @@ const io = require('socket.io')(5050, {
 });
 
 // Global variables, set as necessary
-const CONCURRENCY = 5;
-const TIMEOUT = 60;
-const SCRIPT_DIR = "localspace/";
-const processEmitter = new EventEmitter();
+const CONCURRENCY = 5; //queue
+const TIMEOUT = 60; //runfile
+const SCRIPT_DIR = "localspace/"; //io
+const processEmitter = new EventEmitter(); //runfile
 
 const db = require('./db');
 
 
 // Queue workhorse block
 var queue = async.queue(async function (obj, callback) {
-    io.to(obj.client_id).emit("system", `Starting process ${obj.process_id}...\n`); // alert client that queue has reached this process and is starting
+    
     let output = await runFile(obj.filename, obj.directory, obj.args ?? [], obj.process_id, obj.client_id); // runs the file and gets the output
     //TODO DB QUERY HERE stores output for future retrieval if necessary
+
+    let file = fs.readFileSync(path.join(obj.directory,  obj.filename), {encoding='utf-8'});
     
-    db.query('INSERT')
+    let prevSub = await db.query('SELECT * FROM submissions WHERE labid=%s AND student=%s;', obj.labid,  obj.student);
+    if(prevSub.rowCount!=0){
+        await db.query('INSERT INTO submissions (student, file, ts, output, attemptno, labid) VALUES (%s, %L, %s, %L, 1, %s);'
+                    ,obj.student, file, Date.now(), output, 1, obj.labid);
 
-
-    // If the subdirectory was created by the process (AKA this process is not a testing file in the testing folder), delete the subdirectory
-    if (obj.directory != "testing") {
-        fs.rmdirSync(obj.directory, { recursive: true });
     }
+    
+    //cleanunp after we're done
+    
+    fs.rmdirSync(obj.directory);
+    
     callback();
 }, CONCURRENCY); // how many processes to allow in parallel
 
@@ -199,7 +205,7 @@ async function runJava(filename, directory, args, process_id, client_id) {
  * @param {String} client_id uuid 
  */
 async function runCPP(filename, directory, args, process_id, client_id) {
-
+    
     // Check for compilation errors
     let compileErrors = false;
 
@@ -281,6 +287,8 @@ async function runCPP(filename, directory, args, process_id, client_id) {
  * @param {String} client_id uuid
  */
 async function runFile(filename, directory, args, process_id, client_id) {
+    io.to(obj.client_id).emit("system", `Starting process ${obj.process_id}...\n`); // alert client that queue has reached this process and is starting
+
     let extension = filename.match(/\..+$/)[0]; // grabs file extension
 
     if (extension == ".py") {
@@ -299,9 +307,6 @@ async function runFile(filename, directory, args, process_id, client_id) {
 
 
 
-
-
-
 // When a client connects to the websocket (aka, when someone opens the page in their browser)
 io.on('connection', (socket) => {
 
@@ -309,7 +314,7 @@ io.on('connection', (socket) => {
     console.log(`Someone has connected to the websocket with id ${socket.id}`);
 
     // When client submits code
-    // TODO static/js/run.js make labid a parameter and it will be a part of this
+    
     socket.on('submit', (data) => {
 
         // Create a new, universally unique ID for the process and create a new subdirectory path with this ID to contain it
@@ -325,8 +330,18 @@ io.on('connection', (socket) => {
         }
 
         // Add the process to the queue
-        queue.push({ filename: data.filename, directory: process_dir, process_id: process_id, client_id: socket.id, args: [] });
-
+        queue.push(
+            {
+                filename: data.filename, 
+                directory: process_dir, 
+                process_id: process_id, 
+                client_id: socket.id, 
+                args: [], 
+                labid: data.labid, 
+                student: data.student
+            }
+        );
+            // TODO static/js/run.js make necessary parameters
         // Report to client that their file has been added to the queue and is waiting to be processed.
         console.log(`Connection ${socket.id} has added process ${process_id} to the queue.`);
         socket.emit("system", `Process ${process_id} has been created and added to the queue at position ${queue.length()}\n`);

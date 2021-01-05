@@ -2,9 +2,9 @@ let db = require('./db');
 let fs = require('fs').promises;
 let nfs = require('fs');
 const p = require('path')
-const { java, python } = require('compile-run');
 
 /**
+ * DEPRECATED
  * Helper to call the needed processes 
  * @param {String} f1 Path to student file f1 within ./localspace/lab-userid
  * @param {*} utest Path to unit test within ./localspace/lab-userid
@@ -22,7 +22,7 @@ function grade(id, f1, utest) {
   
   
   //run the damned file
-  //TODO
+
 }
 
 /**
@@ -52,7 +52,7 @@ async function fetchFile(fid, path) {
  * @returns {Boolean} true if file is correct extension 
  * */
 async function checkExt(filename, labid) {
-  let res = await db.query('SELECT * FROM lab_files WHERE is_attachment=True;');
+  let res = await db.query('SELECT * FROM lab_files WHERE is_attachment=True AND lab=%s;', labid);
   console.log(res)
   let fileext = res.rows.filter((v) => {
     v.ext = db.query('SELECT extension FROM files WHERE id=%s', v.fid);
@@ -87,16 +87,9 @@ async function resetDir() {
  * @param  {...any} args 
  */
 async function run(path,{timeout, input}, ...args) {
-  if (path.endsWith('.java')) {
-
-    let res = await java.runFile(path);
-    console.log(res)
 
 
-  } else if(path.endsWith('.py')){
-    let res = await python.runFile(path, {executionPath: "python3.8"})
-
-  }
+  
 }
 
 
