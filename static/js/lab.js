@@ -24,7 +24,7 @@ $(function() {
 
             $("#dropzone-submit-button").on("click", function (e) {
                 e.preventDefault();
-                $(".output-body").append("yep<br>");
+                //$(".output-body").append("yep<br>"); //TEST
                 $($(".output-body")[0]).scrollTop(function () { return this.scrollHeight; });
                 socket.emit('submit', {
                     filename: myDropzone.files[0].name,

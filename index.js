@@ -38,3 +38,4 @@ const io = require('socket.io')(5050, {
         methods: ["GET", "POST"]
     }
 });
+setTask.set(io);
