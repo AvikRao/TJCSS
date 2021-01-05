@@ -4,7 +4,7 @@ let hbs = require('hbs');
 let path = require('path');
 let cookieSession = require('cookie-session')
 var bodyParser = require('body-parser');
-
+const setTask = require('./routes/tasks')
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false })) 
@@ -30,4 +30,11 @@ routes.set(app);
 
 let listener = app.listen(app.get('port'), function () {
 	console.log('Express server started on port: ' + listener.address().port);
+});
+
+const io = require('socket.io')(5050, {
+    cors: {
+        origin: "http://localhost:8080", //true ip here later
+        methods: ["GET", "POST"]
+    }
 });
