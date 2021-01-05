@@ -38,6 +38,9 @@ module.exports.set = function (app) {
                     period: classperiod,
                 });
             };
+            res.render('dashboard', { user: req.session, classes:transform(realdata),});
+
+
         }
 
     });
