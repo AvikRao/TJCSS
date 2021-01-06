@@ -17,10 +17,13 @@ const db = require('./db');
 
 // Queue workhorse block
 var queue = async.queue(async function (obj, callback) {
-
+    console.log('running?')
+    try{
     let output = await runFile(obj.io, obj.filename, obj.directory, obj.args ?? [], obj.process_id, obj.client_id); // runs the file and gets the output
     //TODO DB QUERY HERE stores output for future retrieval if necessary
-
+    } catch(e){
+        obj.io.to(obj.client_id).emit('error', 'something happened  here')
+    }
     let file = fs.readFileSync(path.join(obj.directory, obj.filename));
 
     let prevSub = await db.query('SELECT * FROM submissions WHERE labid=%s AND student=%s;', obj.labid, obj.student);
