@@ -4,7 +4,7 @@ let hbs = require('hbs');
 let path = require('path');
 let cookieSession = require('cookie-session')
 var bodyParser = require('body-parser');
-const setTask = require('./routes/tasks')
+
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false })) 
@@ -38,4 +38,5 @@ const io = require('socket.io')(5050, {
         methods: ["GET", "POST"]
     }
 });
-setTask.set(io);
+
+require('./routes/tasks')(io);
