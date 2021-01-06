@@ -284,21 +284,21 @@ async function runCPP(io, filename, directory, args, process_id, client_id) {
  * @param {String} process_id uuid
  * @param {String} client_id uuid
  */
-async function runFile(filename, directory, args, process_id, client_id) {
+async function runFile(io, filename, directory, args, process_id, client_id) {
     io.to(obj.client_id).emit("system", `Starting process ${obj.process_id}...\n`); // alert client that queue has reached this process and is starting
 
     let extension = filename.match(/\..+$/)[0]; // grabs file extension
 
     if (extension == ".py") {
 
-        return runPython(filename, directory, args, process_id, client_id);
+        return runPython(io,filename, directory, args, process_id, client_id);
 
     } else if (extension == ".java") {
 
-        return runJava(filename, directory, args, process_id, client_id);
+        return runJava(io,filename, directory, args, process_id, client_id);
 
     } else if (extension == ".cpp") {
-        return runCPP(filename, directory, args, process_id, client_id);
+        return runCPP(io,filename, directory, args, process_id, client_id);
     }
 }
 
