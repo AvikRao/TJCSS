@@ -323,7 +323,7 @@ module.exports = (io) => {
 
         // When client submits code
 
-        socket.on('submit', (data) => {
+        socket.on('submit', async (data) => {
             let classid = await db.query('SELECT classid FROM labs WHERE id=%s;', data.labid);
             //fetch class id from the lab. if nothing returns, the lab doesnt exist
             if (!classid.rows){
