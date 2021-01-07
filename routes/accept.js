@@ -55,7 +55,7 @@ module.exports.set = function (app) {
             let sclasses = await db.query('SELECT class FROM class_user WHERE uid=%s;', req.session.userid);
 
             if (!sclasses.rows[0] == classid.rows[0])
-                throw ErrorResponse('No permissions to submit to this lab!');
+                throw ErrorResponse('No permissions to submit to this lab!', 403);
 
             //remove all previous grader files in the database
             //put these files in the database

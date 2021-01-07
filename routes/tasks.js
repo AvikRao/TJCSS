@@ -17,13 +17,21 @@ const db = require('./db');
 
 // Queue workhorse block
 var queue = async.queue(async function (obj, callback) {
-    console.log('running?')
-    try{
-    let output = await runFile(obj.io, obj.filename, obj.directory, obj.args ?? [], obj.process_id, obj.client_id); // runs the file and gets the output
-    //TODO DB QUERY HERE stores output for future retrieval if necessary
-    } catch(e){
-        obj.io.to(obj.client_id).emit('error', 'something happened  here')
+    try {
+
+        let output = await runFile(obj.io, obj.filename, obj.directory, obj.args ?? [], obj.process_id, obj.client_id); // runs the file and gets the output
+        //TODO DB QUERY HERE stores output for future retrieval if necessary
+
+
+    } catch (e) {
+        obj.io.to(obj.client_id).emit('error', 'Something happened while attempting to run the file.');
+        console.log(e);
+        fs.rmdirSync(obj.directory);
+        callback();
+        return;
     }
+
+
     let file = fs.readFileSync(path.join(obj.directory, obj.filename));
 
     let prevSub = await db.query('SELECT * FROM submissions WHERE labid=%s AND student=%s;', obj.labid, obj.student);
@@ -285,20 +293,20 @@ async function runCPP(io, filename, directory, args, process_id, client_id) {
  * @param {String} client_id uuid
  */
 async function runFile(io, filename, directory, args, process_id, client_id) {
-    io.to(obj.client_id).emit("system", `Starting process ${obj.process_id}...\n`); // alert client that queue has reached this process and is starting
+    io.to(client_id).emit("system", `Starting process ${process_id}...\n`); // alert client that queue has reached this process and is starting
 
     let extension = filename.match(/\..+$/)[0]; // grabs file extension
 
     if (extension == ".py") {
 
-        return runPython(io,filename, directory, args, process_id, client_id);
+        return runPython(io, filename, directory, args, process_id, client_id);
 
     } else if (extension == ".java") {
 
-        return runJava(io,filename, directory, args, process_id, client_id);
+        return runJava(io, filename, directory, args, process_id, client_id);
 
     } else if (extension == ".cpp") {
-        return runCPP(io,filename, directory, args, process_id, client_id);
+        return runCPP(io, filename, directory, args, process_id, client_id);
     }
 }
 
@@ -316,6 +324,21 @@ module.exports = (io) => {
         // When client submits code
 
         socket.on('submit', (data) => {
+            let classid = await db.query('SELECT classid FROM labs WHERE id=%s;', data.labid);
+            //fetch class id from the lab. if nothing returns, the lab doesnt exist
+            if (!classid.rows){
+                socket.emit('error', '404: Lab not found. Please return to your dashboard and select the correct class and lab.');
+                socket.emit('system', 'File submission terminated.');
+                return;
+            }
+
+            //if lab exists, determine if student has access to this lab
+            let sclasses = await db.query('SELECT class FROM class_user WHERE uid=%s;', data.student);
+            if (!sclasses.rows[0] == classid.rows[0]){
+                socket.emit('error','403: No permissions to submit to this lab! Please return to your dashboard and select the correct class and lab.');
+                socket.emit('system', 'File submission terminated.');
+                return;
+            }
 
             // Create a new, universally unique ID for the process and create a new subdirectory path with this ID to contain it
             let process_id = uuidv4();
