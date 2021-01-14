@@ -30,6 +30,7 @@ $(function() {
                     filename: myDropzone.files[0].name,
                     data: myDropzone.files[0],
                     labid: window.location.href.match(/lab\/(?<id>\d+)/).groups?.id
+                    
                 });
                 myDropzone.removeAllFiles();
             });
