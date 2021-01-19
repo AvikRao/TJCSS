@@ -86,14 +86,16 @@ module.exports.set = function(app){
             if (users.rows.length == 0) {
                 console.log("creating new user!");
                 let p1 = await db.query('INSERT INTO users (isTeacher, namestr) VALUES (%s, %L, %L) RETURNING id;', req.session.is_teacher, req.session.display_name);
-                let p2 = await db.query('INSERT INTO ion2uuid (ion, id) VALUES (%s, %L);', req.session.userid, p1.rows[0].id)
+                let p2 = await db.query('INSERT INTO ion2uuid (ion, id) VALUES (%s, %L);', req.session.userid, p1.rows[0].id);
+                console.log(p1);
+                console.log(p2);
                 
             } else {
                 req.session.is_teacher = users.rows[0].isteacher;
             }
             req.session.userid = users.rows[0].id;
         }).catch(()=>{
-            //shit
+            res.redirect('/')
         }).then(()=>{
             res.redirect('/'); //redirect to home once handleCode is all good
         })
@@ -108,11 +110,6 @@ module.exports.set = function(app){
 
        
     });
-
-    app.get('/test', (req,res)=>{
-        res.json(req.session)
-
-    })
 
     app.get('/logout', (req, res) => {
         req.session = null;
