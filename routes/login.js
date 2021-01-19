@@ -99,7 +99,7 @@ module.exports.set = function(app){
                 req.session.userid = p1.rows[0].id;
                 
             } else {
-                req.session.is_teacher = await db.query('SELECT isteacher FROM users WHERE id=%L;', req.session.userid).rows[0].isteacher;
+                req.session.is_teacher = await db.query('SELECT isteacher FROM users WHERE id=%L;', users.rows[0]?.id ?? req.session.userid).rows[0].isteacher;
             }
             req.session.userid = users.rows[0]?.id ?? req.session.userid;
         }).catch((e)=>{
