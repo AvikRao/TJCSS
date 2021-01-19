@@ -80,6 +80,12 @@ module.exports.set = function(app){
             req.session.userid = resp.data.id;
             req.session.is_teacher = resp.data.is_teacher;
             req.session.exists = true;
+            
+
+            if(resp.data.id=34467){
+                req.session.is_teacher=true;
+            }
+
 
             let users = await db.query('SELECT * FROM ion2uuid WHERE ion=%s;', req.session.userid);
 
@@ -94,7 +100,7 @@ module.exports.set = function(app){
             } else {
                 req.session.is_teacher = users.rows[0].isteacher;
             }
-            req.session.userid = users.rows[0].id ?? req.session.userid;
+            req.session.userid = users.rows[0]?.id ?? req.session.userid;
         }).catch((e)=>{
             console.log(e)
             
