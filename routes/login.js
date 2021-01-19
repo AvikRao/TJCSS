@@ -100,7 +100,7 @@ module.exports.set = function(app){
                 
             } else {
                 console.log('got here')
-                let uid = await db.query('SELECT id FROM ion2uuid WHERE ion=%s;', resp.data.id)?.rows[0].id;
+                let uid = users.rows[0].id;
                 req.session.is_teacher = await db.query('SELECT isteacher FROM users WHERE id=%L;', uid).rows[0].isteacher;
             }
             req.session.userid = users.rows[0]?.id ?? req.session.userid;
