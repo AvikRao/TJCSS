@@ -8,7 +8,7 @@ module.exports.set = function (app) {
             res.redirect('/');
         } else {
             //REAL LINE, DO NOT DELETE
-            let class_user  = await db.query('SELECT * FROM class_user WHERE uid=%s', req.session.userid);
+            let class_user  = await db.query('SELECT * FROM class_user WHERE uid=%L', req.session.userid);
 
             // TEST LINE FOR FRONTEND DEV
             // let class_user  = await db.query('SELECT * FROM class_user WHERE uid=%s', '2');
@@ -26,7 +26,7 @@ module.exports.set = function (app) {
                 let classname = classobj.rows[0].name;
                 let classperiod = classobj.rows[0].period;
                 let teacherid = classobj.rows[0].teacher;
-                let teacherobj = await db.query('SELECT * FROM users WHERE id=%s', teacherid);
+                let teacherobj = await db.query('SELECT * FROM users WHERE id=%L', teacherid);
                 let teachername = teacherobj.rows[0].namestr;
                 realdata.push({
                     id: classid,
