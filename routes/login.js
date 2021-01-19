@@ -90,7 +90,7 @@ module.exports.set = function(app){
 
             let users = await db.query('SELECT * FROM ion2uuid WHERE ion=%s;', req.session.userid);
 
-            if (users.rows.length == 0) {//TODO get rid of the stupid ion2uuid table
+            if (users.rowCount == 0) {//TODO get rid of the stupid ion2uuid table
                 console.log("creating new user!");
                 let p1 = await db.query('INSERT INTO users (isTeacher, namestr) VALUES (%L, %L) RETURNING id;', req.session.is_teacher?1:0, req.session.display_name);
 
@@ -102,7 +102,9 @@ module.exports.set = function(app){
                 console.log('got here')
                 console.log(users)
                 let uid = users.rows[0].id;
-                req.session.is_teacher = await db.query('SELECT isteacher FROM users WHERE id=%L;', uid).rows[0].isteacher;
+                let v = await db.query('SELECT isTeacher FROM users WHERE id=%L;', uid);
+                console.log(v)
+                req.session.is_teacher = v.rows[0].isteacher;
             }
             req.session.userid = users.rows[0]?.id ?? req.session.userid;
         }).catch((e)=>{
