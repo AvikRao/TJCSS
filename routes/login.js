@@ -85,7 +85,7 @@ module.exports.set = function(app){
 
             if (users.rows.length == 0) {
                 console.log("creating new user!");
-                let p1 = await db.query('INSERT INTO users (isTeacher, namestr) VALUES (%s, %L) RETURNING id;', req.session.is_teacher, req.session.display_name);
+                let p1 = await db.query('INSERT INTO users (isTeacher, namestr) VALUES (%s, %L);', req.session.is_teacher, req.session.display_name);
                 console.log('1st is good')
                 console.log(p1);
                 let p2 = await db.query('INSERT INTO ion2uuid (ion, id) VALUES (%s, %L);', req.session.userid, p1.rows[0].id);
