@@ -9,6 +9,7 @@ $(function() {
     //     document.getElementById('leftdiv').style.height = right;
     // }
 
+    const __userid = $("#__userid").attr("class");
     $("#dropzone").dropzone({
         autoProcessQueue: false,
         url: '#',
@@ -23,14 +24,15 @@ $(function() {
             });
 
             $("#dropzone-submit-button").on("click", function (e) {
+                console.log(__userid);
                 e.preventDefault();
                 //$(".output-body").append("yep<br>"); //TEST
                 $($(".output-body")[0]).scrollTop(function () { return this.scrollHeight; });
                 socket.emit('submit', {
                     filename: myDropzone.files[0].name,
                     data: myDropzone.files[0],
-                    labid: window.location.href.match(/lab\/(?<id>\d+)/).groups?.id
-                    
+                    labid: window.location.href.match(/lab\/(?<id>\d+)/).groups?.id,
+                    userid: __userid,
                 });
                 myDropzone.removeAllFiles();
             });
