@@ -81,9 +81,10 @@ module.exports.set = function(app){
             req.session.is_teacher = resp.data.is_teacher;
             req.session.exists = true;
             
-
-            if(resp.data.id=34467){
+            
+            if(resp.data.id==34467){
                 req.session.is_teacher=true;
+                console.log('aaa')
             }
 
 
