@@ -100,6 +100,7 @@ module.exports.set = function(app){
                 
             } else {
                 console.log('got here')
+                console.log(users)
                 let uid = users.rows[0].id;
                 req.session.is_teacher = await db.query('SELECT isteacher FROM users WHERE id=%L;', uid).rows[0].isteacher;
             }
