@@ -94,7 +94,8 @@ module.exports.set = function(app){
                 req.session.is_teacher = users.rows[0].isteacher;
             }
             req.session.userid = users.rows[0].id;
-        }).catch(()=>{
+        }).catch((e)=>{
+            console.log(e)
             res.redirect('/')
         }).then(()=>{
             res.redirect('/'); //redirect to home once handleCode is all good
