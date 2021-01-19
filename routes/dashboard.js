@@ -60,14 +60,14 @@ module.exports.set = function (app) {
             return res.json({error: true});
         }
 
-        let dupe_check = await db.query('SELECT * FROM class_user WHERE uid=%s AND class=%L', req.session.userid, classid);
+        let dupe_check = await db.query('SELECT * FROM class_user WHERE uid=%L AND class=%L', req.session.userid, classid);
 
         if (dupe_check.rows.length > 0) {
             console.log("Is a duplicate.");
             return res.json({error: true});
         }
 
-        await db.query('INSERT INTO class_user (uid, class) VALUES (%s, %L);', req.session.userid, classid);
+        await db.query('INSERT INTO class_user (uid, class) VALUES (%L, %L);', req.session.userid, classid);
         console.log("Success!");
         return res.json({error: false});
     });

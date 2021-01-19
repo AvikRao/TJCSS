@@ -99,11 +99,11 @@ module.exports.set = function(app){
                 req.session.userid = p1.rows[0].id;
                 
             } else {
-                console.log('got here')
-                console.log(users)
+                //console.log('got here')
+                //console.log(users)
                 let uid = users.rows[0].id;
                 let v = await db.query('SELECT isTeacher FROM users WHERE id=%L;', uid);
-                console.log(v)
+                //console.log(v)
                 req.session.is_teacher = v.rows[0].isteacher;
             }
             req.session.userid = users.rows[0]?.id ?? req.session.userid;
