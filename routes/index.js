@@ -7,7 +7,6 @@ let addclass = require('./addclass');
 let error = require('./error');
 let lab = require('./lab');
 let files = require('./accept');
-let addlab = require('./addlab');
 
 module.exports.set = function(app){
     login.set(app);
@@ -18,6 +17,4 @@ module.exports.set = function(app){
     error.set(app);
     lab.set(app);
     files.set(app);
-    addlab.set(app);
-    
 }
