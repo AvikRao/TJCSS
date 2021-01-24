@@ -14,8 +14,13 @@
 
         <div class="container text-white my-5 px-5 py-5" id="main-box">
             <h1 class='display-4 mb-4'>Create new lab</h1>
-
+            <p class="mb-4 lead">Class: {{classId}}</p>
             <form action="/addlabverify" method="POST">
+
+                <div class="form-group">
+                    <input type="hidden" id="classId" name="classId" value="{{classId}}">
+                </div>
+
                 <div class="form-group">
                     <label for="labNameInput">Lab name</label>
                     <input type="text" class="form-control" id="labNameInput" placeholder="Breadth First Search Lab 1" maxlength="35" name="labNameInput" required>

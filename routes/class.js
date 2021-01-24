@@ -84,7 +84,12 @@ module.exports.set = function (app) {
         // res.render('class', { user: req.session ? (req.session.exists ? req.session : false) : false, data: testdata });
 
         // TEACHER VIEW LINE
+        testdata.classId = req.params.classId;
         res.render('classteacher', { user: req.session ? (req.session.exists ? req.session : false) : false, data: testdata});
+    });
+
+    app.get('/class/:classId/addlab', async (req, res) => {
+        return res.render('addlab', { user: req.session ? (req.session.exists ? req.session : false) : false, classId: req.params.classId });
     });
 
 }
