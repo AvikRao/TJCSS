@@ -64,16 +64,17 @@ async function checkExt(filename, labid) {
 
 /**
  * 
- * @param {String} path from ./localspace/
+ * @param {String} path from .
  * @param {String} name 
- * @param {boolean} isAttachment 
- * @param {String} labid 
+ * @returns {Number} the assigned id of the file, -1 if it fails
  */
-async function storeFile(path, name, isAttachment, labid) {
-  let content = await fs.readFile('./localspace/' + path);
+async function storeFile(path, name) {
+  let content = await fs.readFile(path);
   let e = content.toString().split('.')[1]
-  await db.query('INSERT INTO files (content, extension, name) VALUES (%L, %L, %L);', content.toString(), e, name);
-
+  let resp = await db.query('INSERT INTO files (content, name) VALUES (%L, %L) RETURNING id;', content.toString(), name);
+  if(resp.rowCount>0)
+    return resp.rows[0].id
+  else return -1
 }
 
 async function resetDir() {

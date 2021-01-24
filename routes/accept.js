@@ -52,7 +52,7 @@ module.exports.set = function (app) {
                 throw ErrorResponse('No matching information for submission found!', 404)
 
 
-            let sclasses = await db.query('SELECT class FROM class_user WHERE uid=%s;', req.session.userid);
+            let sclasses = await db.query('SELECT class FROM class_user WHERE uid=Ls;', req.session.userid);
 
             if (!sclasses.rows[0] == classid.rows[0])
                 throw ErrorResponse('No permissions to submit to this lab!', 403);
