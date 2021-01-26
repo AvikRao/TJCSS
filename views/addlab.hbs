@@ -15,7 +15,7 @@
         <div class="container text-white my-5 px-5 py-5" id="main-box">
             <h1 class='display-4 mb-4'>Create new lab</h1>
             <p class="mb-4 lead">Class: {{classId}}</p>
-            <form action="/addlabverify" method="POST">
+            <form action="/addlabverify" method="POST" enctype="multipart/form-data">
 
                 <div class="form-group">
                     <input type="hidden" id="classId" name="classId" value="{{classId}}">
