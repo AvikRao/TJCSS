@@ -42,7 +42,7 @@ module.exports.set = function (app) {
         return res.render('addlab', { user: req.session ? (req.session.exists ? req.session : false) : false });
     });
 
-    app.post('/addlabverify', upload.any('graderFileUpload'), async (req,res)=>{
+    app.post('/addlabverify', upload.file('graderFileUpload'), async (req,res)=>{
         
         
         //verify:
@@ -53,7 +53,6 @@ module.exports.set = function (app) {
         4. parameter verification
         */
         console.log(req.body)
-        
 
         let fid = await files.storeFile(req.file.path, req.file.originalname);
         if(fid==-1){
