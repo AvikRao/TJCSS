@@ -3,27 +3,6 @@ let fs = require('fs').promises;
 let nfs = require('fs');
 const p = require('path')
 
-/**
- * DEPRECATED
- * Helper to call the needed processes 
- * @param {String} f1 Path to student file f1 within ./localspace/lab-userid
- * @param {*} utest Path to unit test within ./localspace/lab-userid
- */
-function grade(id, f1, utest) {
-  let fid = id + '-' + req.params.labId;
-
-
-  if (!await checkExt(f1, req.params.labId))
-    throw Error('Incorrect file format!')
-  //await pcess.storeFile(id+'/'+req.file.filename, req.file.filename , false, req.params.labId)
-  
-  //fetch grader file?
-  await fetchFile(10, './localspace/' + fid + '/');
-  
-  
-  //run the damned file
-
-}
 
 /**
  * Fetches a file given its fid from database.
@@ -99,6 +78,5 @@ module.exports.storeFile = storeFile;
 module.exports.checkExt = checkExt;
 module.exports.resetDir = resetDir;
 module.exports.fetchFile = fetchFile;
-module.exports.grade = grade;
 module.exports.run = run;
 

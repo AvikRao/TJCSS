@@ -1,7 +1,8 @@
-let db = require('./db');
+let db = require('./db')
 let multer = require('multer');
-let fs = require('fs/promises');
+let fs = require('fs');
 let path = require('path')
+let files = require('./process')
 
 class ErrorResponse extends Error{
     constructor(message, code){
@@ -16,15 +17,13 @@ const storage = multer.diskStorage({
 
     destination: async (req, file, cb) => {
 
-        let id = req.session.id+'-'+req.params.labId;
-        //let id = 34467 + '-' + req.params.labId;
-        
+        let id = req.session.userid;        
         try{
-            await fs.rmdir('./localspace/' + id, {recursive:true});
-            await fs.mkdir('./localspace/' + id);
+            await fs.promises.rmdir('./localspace/' + id, {recursive:true});
+            await fs.promises.mkdir('./localspace/' + id);
         } catch(e){
             console.log(e)
-            await fs.mkdir('./localspace/' + id);
+            await fs.promises.mkdir('./localspace/' + id);
         }
         cb(null, './localspace/' + id);
         //filepath starts at main application file root for whatever fucking reason
@@ -35,45 +34,38 @@ const storage = multer.diskStorage({
 })
 
 
-//TODO apply relevant error catching
 module.exports.set = function (app) {
-    // ENDPOINT THAT RECEIVES THE SUBMITTED FILE
+
     let upload = multer({ storage: storage });
 
-
-
-    //note: tell avik that the field name is 'files'
-    //TEACHER GRADER SUBMISSION ONLY
-    app.post('/grader-file/:labId',upload.any('files'), async (req,res)=>{
-        try{
-            let classid = await db.query('SELECT classid FROM labs WHERE id=%s;', req.params.labId);
-            //fetch class id from the lab. if nothing returns, the lab doesnt exist
-            if (!classid.rows)
-                throw ErrorResponse('No matching information for submission found!', 404)
-
-
-            let sclasses = await db.query('SELECT class FROM class_user WHERE uid=Ls;', req.session.userid);
-
-            if (!sclasses.rows[0] == classid.rows[0])
-                throw ErrorResponse('No permissions to submit to this lab!', 403);
-
-            //remove all previous grader files in the database
-            //put these files in the database
-
-            let prevFiles = await db.query('SELECT (fid, is_attachment) FROM lab_files WHERE lab=%s', req.params.labId);
-            res.status(200).send('Success!')
-            return;
-        } catch(e){
-
-        }
+    app.get('/addlab', async (req, res) => {
+        return res.render('addlab', { user: req.session ? (req.session.exists ? req.session : false) : false });
     });
-    //TODO do this
-    app.post('/lab-attachments/labId', upload.any('files'), async (req, res)=>{
-        try{
 
-        }catch(e){
+    app.post('/addlabverify',upload.any('graderFileUpload'), async (req,res)=>{
+        console.log(req)
+        
+        //verify:
+        /*
+        1. class exists
+        2. user has access to class
+        3. user is a teacher
+        4. parameter verification
+        */
 
+        
+
+        let fid = await files.storeFile(req.file.path, req.file.originalname);
+        if(fid==-1){
+            throw new ErrorResponse('Failed to upload the file to the database.', 500)
         }
-    })
+        await fs.promises.rmdir(req.file.path);
+
+        res.redirect('/class/'+req.body.classId);
+        return;
+    });
+
+
+    
 
 }
