@@ -84,7 +84,7 @@ module.exports.set = function (app) {
         if((typeof req.body.showStudentOutputBoolInput) !== 'undefined' ){
             columns.push('visible_output')
             values.push('%s')
-            params.push(req.body.showStudentOutputBoolInput)
+            params.push(req.body.showStudentOutputBoolInput === 'on')
         }
         if(req.body.labLanguageInput){
             columns.push('lang')
