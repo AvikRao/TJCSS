@@ -52,7 +52,7 @@ module.exports.set = function (app) {
         3. user is a teacher
         4. parameter verification
         */
-
+        console.log(req.body.keys)
         let lid = await db.query('INSERT INTO labs (prompttxt, attempts, deadline, name, classid, visible_output, lang) VALUES (%L, %s, %s, %L, %s, %s, %L) RETURNING id;', 
                                                     req.body.labDescriptionInput, req.body.submissionLimitInput, 
                                                     //null is deadline 
