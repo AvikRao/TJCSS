@@ -52,14 +52,20 @@ module.exports.set = function (app) {
         3. user is a teacher
         4. parameter verification
         */
-        console.log(req.body)
 
+        let lid = await db.query('INSERT INTO labs (prompttxt, attempts, deadline, name, classid, visible_output, lang) VALUES'+
+                                                    '(%L, %s, %s, %L, %s, %s, %L)', 
+                                                    req.body.labDescriptionInput, req.body.submissionLimitInput, 
+                                                    //null is deadline 
+                                                    null, req.body.labNameInput, req.body.showStudentOutputBoolInput, 
+                                                    req.body.labLanguageInput);
+                                        
         let fid = await files.storeFile(req.file.path, req.file.originalname);
         if(fid==-1){
             throw new ErrorResponse('Failed to upload the file to the database.', 500)
         }
         await fs.promises.rmdir(req.file.path);
-
+        await db.query('INSERT INTO lab_files (lab, fid, is_attachment, is_test) VALUES (%s, %s, f, t);', )
         res.redirect('/class/'+req.body.classId);
         return;
     });
