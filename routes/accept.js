@@ -42,7 +42,7 @@ module.exports.set = function (app) {
         return res.render('addlab', { user: req.session ? (req.session.exists ? req.session : false) : false });
     });
 
-    app.post('/addlabverify', upload.file('graderFileUpload'), async (req,res)=>{
+    app.post('/addlabverify', upload.single('graderFileUpload'), async (req,res)=>{
         
         
         //verify:
@@ -64,8 +64,11 @@ module.exports.set = function (app) {
         if(fid==-1){
             throw new ErrorResponse('Failed to upload the file to the database.', 500)
         }
+        if(lid.rowCount==0){
+            throw new ErrorResponse('Failed to create the lab.', 500)
+        }
         await fs.promises.rmdir(req.file.path);
-        await db.query('INSERT INTO lab_files (lab, fid, is_attachment, is_test) VALUES (%s, %s, f, t);', )
+        await db.query('INSERT INTO lab_files (lab, fid, is_attachment, is_test) VALUES (%s, %s, f, t);', lid.rows[0].id, fid);
         res.redirect('/class/'+req.body.classId);
         return;
     });
