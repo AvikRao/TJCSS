@@ -53,16 +53,19 @@ module.exports.set = function (app) {
         3. user is a teacher
         4. parameter verification
         */
-       /*
+       ///*
         let columns = []
         let values = []
+        let params = []
         if(req.body.labDescriptionInput){
             columns.push('prompttxt')
             values.push('%L')
+            params.push(req.body.labDescriptionInput)
         }
         if(req.body.submissionLimitInput){
             columns.push('attempts')
             values.push('%s')
+            params.push(req.body.submissionLimitInput)
         }
         if(req.body.deadline){
             ;
@@ -71,26 +74,27 @@ module.exports.set = function (app) {
         if(req.body.labNameInput){
             columns.push('name')
             values.push('%s')
+            params.push(req.body.labNameInput)
+        }
+        if(req.body.classId){
+            columns.push('classid')
+            values.push('%s')
+            params.push(req.body.classId)
         }
         if((typeof req.body.showStudentOutputBoolInput) !== 'undefined' ){
-            columns.push('')
-            values.push('%L')
+            columns.push('visible_output')
+            values.push('%s')
+            params.push(req.body.showStudentOutputBoolInput)
         }
-        if(req.body.labDescriptionInput){
-            columns.push('prompttxt')
+        if(req.body.labLanguageInput){
+            columns.push('lang')
             values.push('%L')
+            params.push(req.body.labLanguageInput)
         }
-        if(req.body.labDescriptionInput){
-            columns.push('prompttxt')
-            values.push('%L')
-        }
-        */
 
-        let lid = await db.query('INSERT INTO labs (prompttxt, attempts, deadline, name, classid, visible_output, lang) VALUES (%L, %s, %s, %L, %s, %s, %L) RETURNING id;', 
-                                                    req.body.labDescriptionInput, req.body.submissionLimitInput, 
-                                                    //null is deadline 
-                                                    req.body.nothinghere, req.body.classId, req.body.labNameInput, req.body.showStudentOutputBoolInput, 
-                                                    req.body.labLanguageInput);
+        //*/
+        db.query.apply()
+        let lid = await db.query.apply([`INSERT INTO labs (${columns.join(', ')}) VALUES (${values.join(', ')}) RETURNING id;`].concat(params) );
                                         
         let fid = await files.storeFile(req.file.path, req.file.originalname);
         if(fid==-1){
