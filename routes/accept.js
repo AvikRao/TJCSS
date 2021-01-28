@@ -34,6 +34,7 @@ const storage = multer.diskStorage({
 })
 
 
+
 module.exports.set = function (app) {
 
     let upload = multer({ storage: storage });
@@ -52,11 +53,43 @@ module.exports.set = function (app) {
         3. user is a teacher
         4. parameter verification
         */
-        console.log(req.body.keys)
+       /*
+        let columns = []
+        let values = []
+        if(req.body.labDescriptionInput){
+            columns.push('prompttxt')
+            values.push('%L')
+        }
+        if(req.body.submissionLimitInput){
+            columns.push('attempts')
+            values.push('%s')
+        }
+        if(req.body.deadline){
+            ;
+            //TODO TURN DEADLINE INTO TIMESTAMP
+        }
+        if(req.body.labNameInput){
+            columns.push('name')
+            values.push('%s')
+        }
+        if((typeof req.body.showStudentOutputBoolInput) !== 'undefined' ){
+            columns.push('')
+            values.push('%L')
+        }
+        if(req.body.labDescriptionInput){
+            columns.push('prompttxt')
+            values.push('%L')
+        }
+        if(req.body.labDescriptionInput){
+            columns.push('prompttxt')
+            values.push('%L')
+        }
+        */
+
         let lid = await db.query('INSERT INTO labs (prompttxt, attempts, deadline, name, classid, visible_output, lang) VALUES (%L, %s, %s, %L, %s, %s, %L) RETURNING id;', 
                                                     req.body.labDescriptionInput, req.body.submissionLimitInput, 
                                                     //null is deadline 
-                                                    req.body.nothinghere, req.body.labNameInput, req.body.showStudentOutputBoolInput, 
+                                                    req.body.nothinghere, req.body.classId, req.body.labNameInput, req.body.showStudentOutputBoolInput, 
                                                     req.body.labLanguageInput);
                                         
         let fid = await files.storeFile(req.file.path, req.file.originalname);
