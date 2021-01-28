@@ -93,8 +93,9 @@ module.exports.set = function (app) {
         }
 
         //*/
-        db.query.apply()
-        let lid = await db.query.apply([`INSERT INTO labs (${columns.join(', ')}) VALUES (${values.join(', ')}) RETURNING id;`].concat(params) );
+        let args = [`INSERT INTO labs (${columns.join(', ')}) VALUES (${values.join(', ')}) RETURNING id;`].concat(params)
+        console.log(args)
+        let lid = await db.query.apply(args);
                                         
         let fid = await files.storeFile(req.file.path, req.file.originalname);
         if(fid==-1){
