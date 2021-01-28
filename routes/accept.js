@@ -56,7 +56,7 @@ module.exports.set = function (app) {
         let lid = await db.query('INSERT INTO labs (prompttxt, attempts, deadline, name, classid, visible_output, lang) VALUES (%L, %s, %s, %L, %s, %s, %L) RETURNING id;', 
                                                     req.body.labDescriptionInput, req.body.submissionLimitInput, 
                                                     //null is deadline 
-                                                    undefined, req.body.labNameInput, req.body.showStudentOutputBoolInput, 
+                                                    req.body.nothinghere, req.body.labNameInput, req.body.showStudentOutputBoolInput, 
                                                     req.body.labLanguageInput);
                                         
         let fid = await files.storeFile(req.file.path, req.file.originalname);
