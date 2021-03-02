@@ -22,7 +22,7 @@ async function fetchFile(fid, path) {
     nfs.writeFileSync(p.join(path, v.name), v.content);
     lastFile=v
   });
-  return v;
+  return lastFile;
   //put file in directory
 
 }
