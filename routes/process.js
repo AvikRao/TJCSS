@@ -17,13 +17,12 @@ async function fetchFile(fid, path) {
   if (!response.rows) {
     throw new Error('File not found');
   }
-  let lastFile = undefined;
+  
   response.rows.forEach( (v, i) => {
     nfs.writeFileSync(p.join(path, v.name), v.content);
-    lastFile=v
   });
 
-  lastFile=response.rows[0]
+  let lastFile=response.rows[0]
   console.log(lastFile)
   return lastFile;
   //put file in directory
