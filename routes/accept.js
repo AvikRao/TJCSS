@@ -11,7 +11,30 @@ class ErrorResponse extends Error{
     }
 }
 //TODO fully implement error codes with this
-
+function deleteDirectory(dir) {
+    return new Promise(function (resolve, reject) {
+        fs.access(dir, function (err) {
+            if (err) {
+                return reject(err);
+            }
+            fs.readdir(dir, function (err, files) {
+                if (err) {
+                    return reject(err);
+                }
+                Promise.all(files.map(function (file) {
+                    return deleteFile(dir, file);
+                })).then(function () {
+                    fs.rmdir(dir, function (err) {
+                        if (err) {
+                            return reject(err);
+                        }
+                        resolve();
+                    });
+                }).catch(reject);
+            });
+        });
+    });
+};
 
 const storage = multer.diskStorage({
 
@@ -105,7 +128,7 @@ module.exports.set = function (app) {
             throw new ErrorResponse('Failed to create the lab.', 500)
         }
         
-        await fs.promises.rmdir(path.dirname(req.file.path));
+        await deleteDirectory(path.dirname(req.file.path));
         await db.query('INSERT INTO lab_files (lab, fid, is_attachment, is_test) VALUES (%s, %s, f, t);', lid.rows[0].id, fid);
         res.redirect('/class/'+req.body.classId);
         return;
