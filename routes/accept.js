@@ -152,7 +152,7 @@ module.exports.set = function (app) {
         }
         
         await deleteDirectory(path.dirname(req.file.path));
-        await db.query('INSERT INTO lab_files (lab, fid, is_attachment, is_test) VALUES (%s, %s, f, t);', lid.rows[0].id, fid);
+        await db.query('INSERT INTO lab_files (lab, fid, is_attachment, is_test) VALUES (%s, %s, "f", "t");', lid.rows[0].id, fid);
         res.redirect('/class/'+req.body.classId);
         return;
     });
