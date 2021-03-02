@@ -81,10 +81,8 @@ var queue = async.queue(async function (obj, callback) {
 
     let prevSub = await db.query('SELECT * FROM submissions WHERE labid=%s AND student=%s;', obj.labid, obj.student);
     if (prevSub.rowCount != 0) {
-        console.log('this is the problem')
         await db.query('INSERT INTO submissions (student, file, ts, output, attemptno, labid) VALUES (%s, %L, %s, %L, 1, %s);'
             , obj.student, file, Date.now(), output, obj.labid);
-        console.log('yeah its the problem')
 
     }
 
@@ -371,6 +369,7 @@ module.exports = (io) => {
         // When client submits code
 
         socket.on('submit', async (data) => {
+            console.log('statement1')
             let classid = await db.query('SELECT classid FROM labs WHERE id=%s;', data.labid);
             //fetch class id from the lab. if nothing returns, the lab doesnt exist
             if (!classid.rows){
@@ -378,6 +377,7 @@ module.exports = (io) => {
                 socket.emit('system', 'File submission terminated.');
                 return;
             }
+            console.log('statement2')
 
             //if lab exists, determine if student has access to this lab
             let sclasses = await db.query('SELECT class FROM class_user WHERE uid=%s;', data.student);
