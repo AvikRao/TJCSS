@@ -18,7 +18,7 @@ async function fetchFile(fid, path) {
     throw new Error('File not found');
   }
   let lastFile = undefined;
-  response.rows.forEach(async (v, i) => {
+  response.rows.forEach( (v, i) => {
     nfs.writeFileSync(p.join(path, v.name), v.content);
     lastFile=v
   });
