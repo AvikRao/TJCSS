@@ -1,3 +1,4 @@
+const db = require('./db')
 module.exports.set = function (app) {
 
     let testdata = {
@@ -54,7 +55,30 @@ module.exports.set = function (app) {
     };
 
     app.get('/class/:classId', (req, res) => {
+        let classes = await db.query('SELECT * FROM class_user WHERE uuid=%s;', req.session.userid);
+        if(classes.rowCount==0)
+            res.render('class', { user: req.session ? (req.session.exists ? req.session : false) : false, data: [] });
+        
+        try{
+            let check = false;
+            classes.rows.forEach((e,i)=>{
+                if(!e)
+                    if(e.class === req.params.classId)
+                        check=true
+            })
+            if(!check)
+                throw new Error('No permissions for this class');
+            
+            let labresp = await db.query('SELECT * FROM labs WHERE classid=%s', req.params.classId);
+            if(labresp.rowCount=0)
+                ;//if no labs, then show nothing
+                
+            
 
+        } catch (e){
+            res.redirect('/error');
+            return;
+        } 
         // TEST DATA FOR STUDENT VIEW
         // testdata.labs.forEach((obj) => {
         //     let now = Date.now();
