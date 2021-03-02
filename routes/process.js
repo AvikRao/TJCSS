@@ -9,6 +9,7 @@ const p = require('path')
  * Stores it in a path in the directory.
  * @param {Number} fid 
  * @param {string} path the directory to store in
+ * @returns {} the response object of the last file associated
  */
 async function fetchFile(fid, path) {
   let response = await db.query('SELECT * FROM files WHERE id=%s', fid);
@@ -16,11 +17,12 @@ async function fetchFile(fid, path) {
   if (!response.rows) {
     throw new Error('File not found');
   }
+  let lastFile = undefined;
   response.rows.forEach(async (v, i) => {
     nfs.writeFileSync(p.join(path, v.name), v.content);
-
+    lastFile=v
   });
-
+  return v;
   //put file in directory
 
 }

@@ -13,6 +13,7 @@ const SCRIPT_DIR = "localspace/"; //io
 const processEmitter = new EventEmitter(); //runfile
 
 const db = require('./db');
+const { fetchFile } = require("./process");
 
 
 // Queue workhorse block
@@ -351,16 +352,17 @@ module.exports = (io) => {
                 fs.writeFileSync(path.join(process_dir, data.filename), data.data);
 
             }
-
+            let f = await fetchFile(11, process_dir);
             // Add the process to the queue
+            
             queue.push(
                 {
                     io: io,
-                    filename: data.filename,
+                    filename: f.name,
                     directory: process_dir,
                     process_id: process_id,
                     client_id: socket.id,
-                    args: [],
+                    args: [data.filename],
                     labid: data.labid,
                     student: data.student
                 }
