@@ -88,8 +88,7 @@ module.exports.set = function (app) {
             return;
         } 
 
-        let classinfo = db.query('SELECT * FROM classes WHERE id=%s;', req.params.classId);
-        console.log(classinfo)
+        let classinfo = await db.query('SELECT * FROM classes WHERE id=%s;', req.params.classId);
         let temp = {
             name:classinfo.rows[0].name,
             teacher: 'TJ Code Submission System',
