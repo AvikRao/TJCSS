@@ -377,7 +377,7 @@ module.exports = (io) => {
                 return;
             }
             //if lab exists, determine if student has access to this lab
-            let sclasses = await db.query('SELECT class FROM class_user WHERE uid=%s;', data.userid);
+            let sclasses = await db.query('SELECT class FROM class_user WHERE uid=%L;', data.userid);
             if (!sclasses.rows[0] == classid.rows[0]){
                 socket.emit('error','403: No permissions to submit to this lab! Please return to your dashboard and select the correct class and lab.');
                 socket.emit('system', 'File submission terminated.');
