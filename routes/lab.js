@@ -61,7 +61,8 @@ module.exports.set = function (app) {
         if(!classes.includes(labinfo.rows[0].classid))
             return res.redirect('/error')
 
-        labData = labinfo.rows[0]
+        let labData = labinfo.rows[0]
+        console.log(labData)
         let realdata = {
             name:labData.name,
             id:labData.id,
