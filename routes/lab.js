@@ -1,6 +1,5 @@
 let db = require('./db')
 
-//heroku pg:psql -a tjcss
 
 module.exports.set = function (app) {
 
@@ -53,7 +52,23 @@ module.exports.set = function (app) {
     }
 
     app.get('/lab/:labId', (req, res) => {
-        return res.render('lab', { user: req.session ? (req.session.exists ? req.session : false) : false, data: testdata });
+        let labinfo = await db.query('SELECT * FROM labs WHERE id=%s;', req.params.labId);
+        let classes = await db.query('SELECT * FROM class_user WHERE uid=%L;', req.session.userid).rows.map((e,i)=>{
+            return e.class;
+        });
+        if(labinfo.rowCount!=1)
+            return res.redirect('/error');
+        if(!classes.includes(labinfo.rows[0].classid))
+            return res.redirect('/error')
+
+        labData = labinfo.rows[0]
+        let realdata = {
+            name:labData.name,
+            id:labData.id,
+            description: prompttxt
+        }
+
+        return res.render('lab', { user: req.session ? (req.session.exists ? req.session : false) : false, data: realdata });
     });
 
 
