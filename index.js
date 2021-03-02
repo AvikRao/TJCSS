@@ -34,7 +34,7 @@ let listener = app.listen(app.get('port'), function () {
 
 const io = require('socket.io')(5050, {
     cors: {
-        origin: "http://localhost:8080", //true ip here later
+        origin: "http://52.146.18.230:8080", //true ip here later
         methods: ["GET", "POST"]
     }
 });

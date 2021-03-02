@@ -1,4 +1,4 @@
-var socket = io("http://localhost:5050");
+var socket = io("http://52.146.18.230:5050");
 Dropzone.autoDiscover = false;
 $(function() {
 
