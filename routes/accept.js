@@ -73,7 +73,7 @@ module.exports.set = function (app) {
         }
         if(req.body.labNameInput){
             columns.push('name')
-            values.push('%s')
+            values.push('%L')
             params.push(req.body.labNameInput)
         }
         if(req.body.classId){
