@@ -66,7 +66,7 @@ module.exports.set = function (app) {
         let realdata = {
             name:labData.name,
             id:labData.id,
-            description: prompttxt
+            description: labData.prompttxt
         }
 
         return res.render('lab', { user: req.session ? (req.session.exists ? req.session : false) : false, data: realdata });
