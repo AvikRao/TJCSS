@@ -64,7 +64,7 @@ module.exports.set = function (app) {
             console.log(classes.rows)
             classes.rows.forEach((e,i)=>{
                 if(!e)
-                    if(e.class === req.params.classId)
+                    if(e.class == req.params.classId)
                         check=true
             })
             if(!check)
