@@ -81,8 +81,10 @@ var queue = async.queue(async function (obj, callback) {
 
     let prevSub = await db.query('SELECT * FROM submissions WHERE labid=%s AND student=%s;', obj.labid, obj.student);
     if (prevSub.rowCount != 0) {
+        console.log('this is the problem')
         await db.query('INSERT INTO submissions (student, file, ts, output, attemptno, labid) VALUES (%s, %L, %s, %L, 1, %s);'
             , obj.student, file, Date.now(), output, obj.labid);
+        console.log('yeah its the problem')
 
     }
 
