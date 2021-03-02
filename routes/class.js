@@ -63,9 +63,8 @@ module.exports.set = function (app) {
             let check = false;
             console.log(classes.rows)
             classes.rows.forEach((e,i)=>{
-                if(!e)
-                    if(e.class == req.params.classId)
-                        check=true
+                if(e.class == req.params.classId)
+                    check=true
             })
             if(!check)
                 throw new Error('No permissions for this class');
