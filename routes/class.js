@@ -80,7 +80,7 @@ module.exports.set = function (app) {
                 })
 
             } //why is this in here? idk its 11pm
-
+            console.log(data)
 
         } catch (e){
             console.log(e)
