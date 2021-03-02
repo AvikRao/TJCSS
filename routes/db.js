@@ -19,7 +19,7 @@ const pool = new Pool( {
 async function query(query, ...args){
     const client = await pool.connect();  
     const protected_query = format(query, ...args)
-    //console.log(protected_query)
+    console.log(protected_query)
     const result = client.query(protected_query);
     client.release();
     return result;
