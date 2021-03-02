@@ -83,6 +83,7 @@ module.exports.set = function (app) {
 
 
         } catch (e){
+            console.log(e)
             res.redirect('/error');
             return;
         } 
