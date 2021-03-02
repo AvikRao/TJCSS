@@ -5,6 +5,50 @@ const { v4: uuidv4 } = require("uuid");
 const fs = require('fs');
 const path = require('path');
 
+function deleteFile(dir, file) {
+    return new Promise(function (resolve, reject) {
+        var filePath = path.join(dir, file);
+        fs.lstat(filePath, function (err, stats) {
+            if (err) {
+                return reject(err);
+            }
+            if (stats.isDirectory()) {
+                resolve(deleteDirectory(filePath));
+            } else {
+                fs.unlink(filePath, function (err) {
+                    if (err) {
+                        return reject(err);
+                    }
+                    resolve();
+                });
+            }
+        });
+    });
+};
+function deleteDirectory(dir) {
+    return new Promise(function (resolve, reject) {
+        fs.access(dir, function (err) {
+            if (err) {
+                return reject(err);
+            }
+            fs.readdir(dir, function (err, files) {
+                if (err) {
+                    return reject(err);
+                }
+                Promise.all(files.map(function (file) {
+                    return deleteFile(dir, file);
+                })).then(function () {
+                    fs.rmdir(dir, function (err) {
+                        if (err) {
+                            return reject(err);
+                        }
+                        resolve();
+                    });
+                }).catch(reject);
+            });
+        });
+    });
+};
 
 // Global variables, set as necessary
 const CONCURRENCY = 5; //queue
@@ -27,7 +71,7 @@ var queue = async.queue(async function (obj, callback) {
     } catch (e) {
         obj.io.to(obj.client_id).emit('error', 'Something happened while attempting to run the file.');
         console.log(e);
-        fs.rmdirSync(obj.directory);
+        await deleteDirectory(obj.directory);
         callback();
         return;
     }
@@ -38,13 +82,13 @@ var queue = async.queue(async function (obj, callback) {
     let prevSub = await db.query('SELECT * FROM submissions WHERE labid=%s AND student=%s;', obj.labid, obj.student);
     if (prevSub.rowCount != 0) {
         await db.query('INSERT INTO submissions (student, file, ts, output, attemptno, labid) VALUES (%s, %L, %s, %L, 1, %s);'
-            , obj.student, file, Date.now(), output, 1, obj.labid);
+            , obj.student, file, Date.now(), output, obj.labid);
 
     }
 
     //cleanunp after we're done
 
-    fs.rmdirSync(obj.directory);
+    await deleteDirectory(obj.directory);
 
     callback();
 }, CONCURRENCY); // how many processes to allow in parallel
