@@ -11,6 +11,29 @@ class ErrorResponse extends Error{
     }
 }
 //TODO fully implement error codes with this
+
+
+
+function deleteFile(dir, file) {
+    return new Promise(function (resolve, reject) {
+        var filePath = path.join(dir, file);
+        fs.lstat(filePath, function (err, stats) {
+            if (err) {
+                return reject(err);
+            }
+            if (stats.isDirectory()) {
+                resolve(deleteDirectory(filePath));
+            } else {
+                fs.unlink(filePath, function (err) {
+                    if (err) {
+                        return reject(err);
+                    }
+                    resolve();
+                });
+            }
+        });
+    });
+};
 function deleteDirectory(dir) {
     return new Promise(function (resolve, reject) {
         fs.access(dir, function (err) {
