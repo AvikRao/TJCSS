@@ -72,7 +72,7 @@ module.exports.set = function (app) {
 
             let labresp = await db.query('SELECT * FROM labs WHERE classid=%s', req.params.classId);
             if(labresp.rowCount!=0){
-                data = labresp.rows.map(async (e,i)=>{
+                data = labresp.rows.map( (e,i)=>{
                     return {
                         id: e.id,
                         classId: req.params.classId,
@@ -117,7 +117,7 @@ module.exports.set = function (app) {
 
         });
 
-        testdata.labs = transformTeacher(testdata.labs);
+        //testdata.labs = transformTeacher(testdata.labs);
         //temp.labs = transformStudent(temp.labs)
         // STUDENT VIEW LINE
         //res.render('class', { user: req.session ? (req.session.exists ? req.session : false) : false, data: temp });
