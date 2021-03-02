@@ -55,10 +55,10 @@ module.exports.set = function (app) {
     };
 
     app.get('/class/:classId', async (req, res) => {
-        let classes = await db.query('SELECT * FROM class_user WHERE uuid=%s;', req.session.userid);
+        let classes = await db.query('SELECT * FROM class_user WHERE uuid=%L;', req.session.userid);
         if(classes.rowCount==0)
             res.render('class', { user: req.session ? (req.session.exists ? req.session : false) : false, data: [] });
-        
+        let data=undefined;
         try{
             let check = false;
             classes.rows.forEach((e,i)=>{
@@ -69,16 +69,30 @@ module.exports.set = function (app) {
             if(!check)
                 throw new Error('No permissions for this class');
             
-            let labresp = await db.query('SELECT * FROM labs WHERE classid=%s', req.params.classId);
-            if(labresp.rowCount=0)
-                ;//if no labs, then show nothing
 
-            
+            let labresp = await db.query('SELECT * FROM labs WHERE classid=%s', req.params.classId);
+            if(labresp.rowCount!=0){
+                data = labresp.rows.map(async (e,i)=>{
+                    return {
+                        id: e.id,
+                        classId: req.params.classId,
+                    }
+                })
+
+            } //why is this in here? idk its 11pm
+
 
         } catch (e){
             res.redirect('/error');
             return;
         } 
+
+        let classinfo = db.query('SELECT * FROM classes WHERE id=%s;', req.params.classId);
+        let temp = {
+            name:classinfo.rows[0].name,
+            teacher: 'TJ Code Submission System',
+            labs: data
+        }
         // TEST DATA FOR STUDENT VIEW
         // testdata.labs.forEach((obj) => {
         //     let now = Date.now();
@@ -109,7 +123,7 @@ module.exports.set = function (app) {
 
         // TEACHER VIEW LINE
         testdata.classId = req.params.classId;
-        res.render('classteacher', { user: req.session ? (req.session.exists ? req.session : false) : false, data: testdata});
+        res.render('classteacher', { user: req.session ? (req.session.exists ? req.session : false) : false, data: temp});
     });
 
     app.get('/class/:classId/addlab', async (req, res) => {

@@ -140,7 +140,7 @@ module.exports.set = function (app) {
 
         //*/
         let args = [`INSERT INTO labs (${columns.join(', ')}) VALUES (${values.join(', ')}) RETURNING id;`].concat(params)
-        console.log(args)
+        //console.log(args)
         let lid = await db.query.apply(undefined,args);
                                         
         let fid = await files.storeFile(req.file.path, req.file.originalname);
