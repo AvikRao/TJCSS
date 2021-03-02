@@ -61,6 +61,7 @@ module.exports.set = function (app) {
         let data=undefined;
         try{
             let check = false;
+            console.log(classes.rows)
             classes.rows.forEach((e,i)=>{
                 if(!e)
                     if(e.class === req.params.classId)
