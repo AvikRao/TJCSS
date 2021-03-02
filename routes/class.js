@@ -54,7 +54,7 @@ module.exports.set = function (app) {
         },]
     };
 
-    app.get('/class/:classId', (req, res) => {
+    app.get('/class/:classId', async (req, res) => {
         let classes = await db.query('SELECT * FROM class_user WHERE uuid=%s;', req.session.userid);
         if(classes.rowCount==0)
             res.render('class', { user: req.session ? (req.session.exists ? req.session : false) : false, data: [] });
@@ -72,7 +72,7 @@ module.exports.set = function (app) {
             let labresp = await db.query('SELECT * FROM labs WHERE classid=%s', req.params.classId);
             if(labresp.rowCount=0)
                 ;//if no labs, then show nothing
-                
+
             
 
         } catch (e){
