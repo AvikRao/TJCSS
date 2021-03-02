@@ -51,7 +51,7 @@ module.exports.set = function (app) {
 
     }
 
-    app.get('/lab/:labId', (req, res) => {
+    app.get('/lab/:labId', async (req, res) => {
         let labinfo = await db.query('SELECT * FROM labs WHERE id=%s;', req.params.labId);
         let classes = await db.query('SELECT * FROM class_user WHERE uid=%L;', req.session.userid).rows.map((e,i)=>{
             return e.class;
