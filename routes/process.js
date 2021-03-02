@@ -22,6 +22,8 @@ async function fetchFile(fid, path) {
     nfs.writeFileSync(p.join(path, v.name), v.content);
     lastFile=v
   });
+
+  lastFile=response.rows[0]
   return lastFile;
   //put file in directory
 
