@@ -369,7 +369,6 @@ module.exports = (io) => {
         // When client submits code
 
         socket.on('submit', async (data) => {
-            console.log('statement1')
             let classid = await db.query('SELECT classid FROM labs WHERE id=%s;', data.labid);
             //fetch class id from the lab. if nothing returns, the lab doesnt exist
             if (!classid.rows){
@@ -377,10 +376,8 @@ module.exports = (io) => {
                 socket.emit('system', 'File submission terminated.');
                 return;
             }
-            console.log('statement2')
-
             //if lab exists, determine if student has access to this lab
-            let sclasses = await db.query('SELECT class FROM class_user WHERE uid=%s;', data.student);
+            let sclasses = await db.query('SELECT class FROM class_user WHERE uid=%s;', data.userid);
             if (!sclasses.rows[0] == classid.rows[0]){
                 socket.emit('error','403: No permissions to submit to this lab! Please return to your dashboard and select the correct class and lab.');
                 socket.emit('system', 'File submission terminated.');
