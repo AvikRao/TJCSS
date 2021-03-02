@@ -83,7 +83,7 @@ module.exports.set = function (app) {
         }
         if((typeof req.body.showStudentOutputBoolInput) !== 'undefined' ){
             columns.push('visible_output')
-            values.push('%s')
+            values.push('%L')
             params.push(req.body.showStudentOutputBoolInput === 'on')
         }
         if(req.body.labLanguageInput){
