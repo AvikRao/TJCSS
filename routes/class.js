@@ -55,7 +55,7 @@ module.exports.set = function (app) {
     };
 
     app.get('/class/:classId', async (req, res) => {
-        let classes = await db.query('SELECT * FROM class_user WHERE id=%L;', req.session.userid);
+        let classes = await db.query('SELECT * FROM class_user WHERE uid=%L;', req.session.userid);
         if(classes.rowCount==0)
             res.render('class', { user: req.session ? (req.session.exists ? req.session : false) : false, data: [] });
         let data=undefined;
