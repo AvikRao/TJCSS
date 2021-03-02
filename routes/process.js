@@ -24,6 +24,7 @@ async function fetchFile(fid, path) {
   });
 
   lastFile=response.rows[0]
+  console.log(lastFile)
   return lastFile;
   //put file in directory
 
