@@ -14,7 +14,7 @@ const p = require('path')
 async function fetchFile(fid, path) {
   let response = await db.query('SELECT * FROM files WHERE id=%s', fid);
 
-  if (!response.rows) {
+  if (response.rowCount==0) {
     throw new Error('File not found');
   }
   

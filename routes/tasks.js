@@ -395,7 +395,8 @@ module.exports = (io) => {
                 fs.writeFileSync(path.join(process_dir, data.filename), data.data);
 
             }
-            let f = await fetchFile(11, process_dir);
+            //IN THE FUTURE, LINK THIS TO LAB_FILES
+            let f = await fetchFile(20, process_dir);
             // Add the process to the queue
             
             queue.push(
