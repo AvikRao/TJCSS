@@ -118,13 +118,13 @@ module.exports.set = function (app) {
         });
 
         testdata.labs = transformTeacher(testdata.labs);
-        temp.labs = transformStudent(temp.labs)
+        //temp.labs = transformStudent(temp.labs)
         // STUDENT VIEW LINE
-        res.render('class', { user: req.session ? (req.session.exists ? req.session : false) : false, data: temp });
+        //res.render('class', { user: req.session ? (req.session.exists ? req.session : false) : false, data: temp });
 
         // TEACHER VIEW LINE
-        //testdata.classId = req.params.classId;
-        //res.render('classteacher', { user: req.session ? (req.session.exists ? req.session : false) : false, data: temp});
+        testdata.classId = req.params.classId;
+        res.render('classteacher', { user: req.session ? (req.session.exists ? req.session : false) : false, data: temp});
     });
 
     app.get('/class/:classId/addlab', async (req, res) => {
