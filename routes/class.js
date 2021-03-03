@@ -76,6 +76,9 @@ module.exports.set = function (app) {
                     return {
                         id: e.id,
                         classId: req.params.classId,
+                        deadline: "N/A",
+                        submissions: "N/A",
+                        submission_max: "N/A",
                     }
                 })
 
@@ -90,7 +93,7 @@ module.exports.set = function (app) {
 
         let classinfo = await db.query('SELECT * FROM classes WHERE id=%s;', req.params.classId);
         let temp = {
-            name:classinfo.rows[0].name,
+            className:classinfo.rows[0].name,
             teacher: 'TJ Code Submission System',
             labs: data
         }
@@ -120,11 +123,11 @@ module.exports.set = function (app) {
         //testdata.labs = transformTeacher(testdata.labs);
         //temp.labs = transformStudent(temp.labs)
         // STUDENT VIEW LINE
-        //res.render('class', { user: req.session ? (req.session.exists ? req.session : false) : false, data: temp });
+        res.render('class', { user: req.session ? (req.session.exists ? req.session : false) : false, data: temp });
 
         // TEACHER VIEW LINE
-        testdata.classId = req.params.classId;
-        res.render('classteacher', { user: req.session ? (req.session.exists ? req.session : false) : false, data: temp});
+        // testdata.classId = req.params.classId;
+        // res.render('classteacher', { user: req.session ? (req.session.exists ? req.session : false) : false, data: temp});
     });
 
     app.get('/class/:classId/addlab', async (req, res) => {
