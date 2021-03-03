@@ -129,6 +129,7 @@ async function runPython(io, filename, directory, args, process_id, client_id) {
     // reports any output to the client, adds to output string
     pythonProcess.stdout.on('data', (data) => {
         str += data.toString();
+        console.log(data)
         io.to(client_id).emit('output', data.toString());
     });
 
