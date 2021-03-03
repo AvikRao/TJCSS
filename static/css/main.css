@@ -264,6 +264,7 @@ label {
     border-radius: 10px;
     margin-left: 10px;
     /* padding: 5px; */
+    min-height: 650px;
 }
 
 .description-container-inner {
@@ -307,7 +308,7 @@ label {
     border-radius: 10px;
     color: #ffffff;
     border: 2px solid rgba(255, 255, 255, 0.4);
-    height: 60%;
+    height: 100%;
 }   
 
 .lab-main-container {
