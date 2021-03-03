@@ -61,7 +61,8 @@ module.exports.set = function (app) {
         let data=undefined;
         try{
             let check = false;
-            console.log(classes.rows)
+            console.log(classes.rows);
+            console.log(req.params.classId);
             classes.rows.forEach((e,i)=>{
                 if(e.class == req.params.classId)
                     check=true
