@@ -123,10 +123,11 @@ module.exports.set = function (app) {
         //testdata.labs = transformTeacher(testdata.labs);
         //temp.labs = transformStudent(temp.labs)
         // STUDENT VIEW LINE
+        data.classId = req.params.classId;
         res.render('class', { user: req.session ? (req.session.exists ? req.session : false) : false, data: temp });
 
         // TEACHER VIEW LINE
-        // testdata.classId = req.params.classId;
+        testdata.classId = req.params.classId;
         // res.render('classteacher', { user: req.session ? (req.session.exists ? req.session : false) : false, data: temp});
     });
 
