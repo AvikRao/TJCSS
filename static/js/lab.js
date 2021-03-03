@@ -86,20 +86,15 @@ $(function() {
     const rightColHeight = $($(".lab-right-container")[0]).outerHeight();
     const dropzoneHeight = $($(".file-upload")[0]).outerHeight();
     const dropzoneButtonHeight = $($(".dropzone-buttons")[0]).outerHeight();
-    const maxSubmissionHeight = rightColHeight-dropzoneHeight-dropzoneButtonHeight;
     
-
-    if (maxOutputBodyHeight < 250) {
-        $($(".submission-output")[0]).css("min-height", 250);
-        $($(".description-container")[0]).css("min-height", 250);
-    } else {
-        $($(".submission-output")[0]).css("max-height", maxSubmissionHeight);
-    }
 
     const submissionHeight = $($(".submission-output")[0]).outerHeight();
     const outputHeaderHeight = $($(".output-header")[0]).outerHeight();
     const maxOutputBodyHeight = submissionHeight - outputHeaderHeight;
-
+    
+    const maxSubmissionHeight = rightColHeight - dropzoneHeight - dropzoneButtonHeight;
+    
+    $($(".submission-output")[0]).css("max-height", maxSubmissionHeight);
     $($(".output-body")[0]).css("height", maxOutputBodyHeight-5);
 
     
