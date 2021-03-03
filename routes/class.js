@@ -80,6 +80,7 @@ module.exports.set = function (app) {
                         deadline: "N/A",
                         submissions: "N/A",
                         submission_max: "N/A",
+                        grade: "----"
                     }
                 })
 

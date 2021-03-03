@@ -88,9 +88,16 @@ $(function() {
     const dropzoneButtonHeight = $($(".dropzone-buttons")[0]).outerHeight();
     const maxSubmissionHeight = rightColHeight-dropzoneHeight-dropzoneButtonHeight;
     $($(".submission-output")[0]).css("max-height", maxSubmissionHeight);
+
+    if (maxOutputBodyHeight < 250) {
+        $($(".submission-output")[0]).css("min-height", 250);
+        $($(".description-container")[0]).css("min-height", 250);
+    }
+
     const submissionHeight = $($(".submission-output")[0]).outerHeight();
     const outputHeaderHeight = $($(".output-header")[0]).outerHeight();
     const maxOutputBodyHeight = submissionHeight - outputHeaderHeight;
+
     $($(".output-body")[0]).css("height", maxOutputBodyHeight-5);
 
     
