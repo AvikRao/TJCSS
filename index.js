@@ -14,6 +14,7 @@ app.use(express.static('static'));
 hbs.registerPartials(__dirname + '/views/partials');
 
 app.use(express.static('static'));
+app.use('/socket.io', express.static(__dirname + '/node_modules/socket.io/client-dist')); 
 
 app.set('port', process.env.PORT || 8080);
 
@@ -25,9 +26,17 @@ app.use(cookieSession({
 	keys: ['director Broke have a nice day', '1123xXx_pHasZe_qu1ckSc0p3r_xXx1123'],
 }))
 
-
 routes.set(app);
 
 let listener = app.listen(app.get('port'), function () {
 	console.log('Express server started on port: ' + listener.address().port);
 });
+
+const io = require('socket.io')(5050, {
+    cors: {
+        origin: "http://52.146.18.230:8080", //true ip here later
+        methods: ["GET", "POST"]
+    }
+});
+
+require('./routes/tasks')(io);

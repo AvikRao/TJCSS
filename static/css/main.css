@@ -307,6 +307,7 @@ label {
     border-radius: 10px;
     color: #ffffff;
     border: 2px solid rgba(255, 255, 255, 0.4);
+    height: 60%;
 }   
 
 .lab-main-container {
@@ -324,6 +325,8 @@ label {
     padding-top: 15px;
     padding-left: 15px;
     padding-bottom: 10px;
+    overflow-y: auto;
+    overflow: auto !important;
 }
 
 .submission-list-item {
@@ -403,3 +406,35 @@ label {
 label[for="showStudentOutputBoolInput"], label[for="graderFileUpload"] {
     font-size: 1.25em !important;
 }
+
+.pageend-space {
+    height: 3em;
+}
+
+#dropzone-submit-button, #dropzone-clear-button {
+    width: 49%;
+    box-shadow: none;
+}
+
+.stdout-output {
+    color: #ffffff;
+}
+
+.system-output {
+    color: #ffdb58;
+}
+
+.error-output {
+    color: #FF0000;
+}
+
+.success-output {
+    color: #00ff00;
+}
+
+.timeout-output {
+    color: #FF0000;
+}
+
+
+

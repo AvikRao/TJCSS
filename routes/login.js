@@ -3,7 +3,8 @@ let simpleoauth2 = require('simple-oauth2');
 let axios = require('axios')
 
 
-let db = require('./db')
+let db = require('./db');
+const { priorityQueue } = require('async');
 
 
 let ion_client_id = 'BjVuRUFYrXCdjYvtopJjJoBQozRVQxEMd6rijQsu'
@@ -79,18 +80,36 @@ module.exports.set = function(app){
             req.session.userid = resp.data.id;
             req.session.is_teacher = resp.data.is_teacher;
             req.session.exists = true;
+            
+            
+            // if(resp.data.id==34467){
+            //     req.session.is_teacher=true;
+            //     console.log('aaa')
+            // }
 
-            let users = await db.query('SELECT * FROM users WHERE id=%s;', req.session.userid);
 
-            if (users.rows.length == 0) {
+            let users = await db.query('SELECT * FROM ion2uuid WHERE ion=%s;', req.session.userid);
+
+            if (users.rowCount == 0) {//TODO get rid of the stupid ion2uuid table
                 console.log("creating new user!");
-                await db.query('INSERT INTO users (id, isTeacher, namestr) VALUES (%s, %L, %L);', req.session.userid, req.session.is_teacher, req.session.display_name);
-            } else {
-                req.session.is_teacher = users.rows[0].isteacher;
-            }
+                let p1 = await db.query('INSERT INTO users (isTeacher, namestr) VALUES (%L, %L) RETURNING id;', req.session.is_teacher?1:0, req.session.display_name);
 
-        }).catch(()=>{
-            //shit
+                let p2 = await db.query('INSERT INTO ion2uuid (ion, id) VALUES (%s, %L);', req.session.userid, p1.rows[0].id);
+
+                req.session.userid = p1.rows[0].id;
+                
+            } else {
+                //console.log('got here')
+                //console.log(users)
+                let uid = users.rows[0].id;
+                let v = await db.query('SELECT isTeacher FROM users WHERE id=%L;', uid);
+                //console.log(v)
+                req.session.is_teacher = v.rows[0].isteacher;
+            }
+            req.session.userid = users.rows[0]?.id ?? req.session.userid;
+        }).catch((e)=>{
+            console.log(e)
+            
         }).then(()=>{
             res.redirect('/'); //redirect to home once handleCode is all good
         })
@@ -105,11 +124,6 @@ module.exports.set = function(app){
 
        
     });
-
-    app.get('/test', (req,res)=>{
-        res.json(req.session)
-
-    })
 
     app.get('/logout', (req, res) => {
         req.session = null;

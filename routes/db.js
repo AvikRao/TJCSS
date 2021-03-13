@@ -1,7 +1,7 @@
 const { Pool } = require('pg');
 let format = require('pg-format')
 const pool = new Pool( {
-    connectionString:process.env.DATABASE_URL+'?sslmode=require',
+    connectionString:process.env.DATABASE_URL,
     max:19,
     ssl: {
         rejectUnauthorized: false
@@ -18,7 +18,9 @@ const pool = new Pool( {
  */
 async function query(query, ...args){
     const client = await pool.connect();  
-    const result = client.query(format(query, ...args));
+    const protected_query = format(query, ...args)
+    //console.log(protected_query)
+    const result = client.query(protected_query);
     client.release();
     return result;
 }
